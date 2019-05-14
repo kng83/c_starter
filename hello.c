@@ -1,18 +1,17 @@
 #include <stdio.h>
-#include <string.h>
+#include "./spr_zagniezdzania/stale.h"
+#include "stale.h"
 
-#define  IMIE "Bobo"
+//pobranie staylych z pliku stale
 int main(){
+//plik stale.h
+printf("\nto jest  dlugosc %i", DLUGOSC);
+//plik spr_za.../stale.h
+printf("\nto jest szerokosc %i",SZEROKOSC);
 
-//test sizeof
-char name[20]= "Pawles";
-printf("\nsizeof my name %i",sizeof(name));
-
-//test strlen
-printf("\nsizeof my name %i",strlen(name));
-
-//sprawdzam define
-printf("\nPiotrek nic nie robi %s",IMIE);
-
+printf("\nto jest %% a to \\ a to jest \"");
 }
- 
+
+
+
+

@@ -1,0 +1,3 @@
+
+#define SZEROKOSC 100
+
