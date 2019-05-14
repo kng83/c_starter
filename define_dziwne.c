@@ -5,6 +5,8 @@
 #define begin {
 #define end }
 
+
+
 int main()
 begin
 printf("con mozna zrobic z define");
