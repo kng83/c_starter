@@ -1,4 +1,6 @@
-   unsigned short int kon =4;
+#include<stdio.h>
+int main(){
+ unsigned short int kon =4;
     printf("\nto jes dlugosc kon %i",sizeof(kon));
     char alpha = 'A';
     printf("\n size of alpha %i",sizeof(alpha));
