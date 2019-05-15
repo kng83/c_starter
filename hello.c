@@ -2,48 +2,22 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#define count 4
+#define FALSE 0
+#define TRUE 1
 
-void while_test(void);
-void while_break(void);
-void test_operator(void);
-void while_short(void);
-
-
+void check_input(long num);
 int main(){
-while_test();
-while_break();
-test_operator();
-while_short();
 
-    /* code */
-}
+while(TRUE){ printf("some is tekst"); break;};
 
-void while_test(){
-  int local_count = count;
-  while(local_count){
-      printf("\n oto local_count %i",local_count--);
-  }
+check_input(10);
+
 }
 
-void while_break(){
-    int local_count = count;
-    while(1){
-        printf("\n wyjscie dla local_count = 2 local_count = %i",local_count);
-        local_count--;
-        if(local_count <=2) break;
-    } 
-}
-//odejmowanie petli zawarte w while
-void while_short(){
-  int local_count = count;
-  while(local_count--) printf("\n oto short_local_count %i",local_count);
-  
+void check_input(long num){
+    while(scanf("%ld",&num)==1){
+        printf("Podaj liczbe:");
+    }
 }
 
-//test operatora dziwny
-void test_operator(){
-    int some=0, dom=3 ,come=1;
-    some = come  = dom + come;
-    printf("\n some=%i ,dom=%i, come=%i",some,dom,come);
-}
+//148strona

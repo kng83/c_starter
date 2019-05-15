@@ -2,6 +2,7 @@
     "files.associations": {
         "iostream": "cpp",
         "stdio.h": "c",
-        "ssp.h": "c"
+        "ssp.h": "c",
+        "ctype.h": "c"
     }
 }
