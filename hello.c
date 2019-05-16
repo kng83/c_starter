@@ -2,22 +2,20 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#define FALSE 0
-#define TRUE 1
-
-void check_input(long num);
+const int Ilosc_Liczb =3;
 int main(){
-
-while(TRUE){ printf("some is tekst"); break;};
-
-check_input(10);
-
-}
-
-void check_input(long num){
-    while(scanf("%ld",&num)==1){
-        printf("Podaj liczbe:");
+    
+    int wynik[Ilosc_Liczb];
+    int suma =0;
+    printf("podaje liczbe numerow do sredniej");
+    for(int index=0;index<Ilosc_Liczb;index++){
+        scanf("%d",&wynik[index]);
     }
-}
 
-//148strona
+    //srednia
+    for(int i=0;i<Ilosc_Liczb;i++){
+        suma+=wynik[i];
+    }
+    printf("Srednia to %f",(float)suma/(float)Ilosc_Liczb);
+
+}
