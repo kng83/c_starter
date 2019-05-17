@@ -1,18 +1,16 @@
 #include <stdio.h>
 #include <ctype.h>
-#define TRIM ' '
-#define FALSE 4>6
+#include <stdarg.h>
 
-//mozna tak odczytac plik hello.exe < in.txt strumien z in do hello.ex
-//a tak jest odwrotny strumien ktory  dziala co hello.exe > out.txt (tyloko dzila na nowym pliku);
-//prawdopodobnie code go mieli
-//a tak wyglad kopia pliku hello.exe <in.txt> kopia_in.txt
-int main(){
-    char ch;
-    //give EOF to end of file
-    while((ch=getchar())!=EOF){
-        putchar(ch);
+
+
+void main(void){
+    int tab[]={10,202,34};
+    int suma =0;
+    for(int i = 0; i<(sizeof tab)/sizeof(int);i++){
+        suma+=tab[i];
     }
-   
-    return 0;
+    printf("oto suma %i",suma);
+    printf("\nadres tablicy to %x",tab);
 }
+
