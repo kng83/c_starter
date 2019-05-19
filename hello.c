@@ -2,25 +2,36 @@
 #include <ctype.h>
 #include <stdarg.h>
 
-char *t1 = "cos tam jest napisane";
-char tw[] = "jakis tekst";
-char *t2 = "www sss kkk ";
-char *t3[3] = {"pierwszy","dwa","trzzy"};
+char hart[] = "Stop";
+char *head = "star";
+void main2(void);
 
+void main2()
+{
+    int i;
+    for (i = 0; i < 4; i++){
+        putchar(hart[i]);
+    }
+    putchar('\n');
+
+    for (i = 0; i < 4; i++){
+        putchar(head[i]);
+    }
+    putchar('\n');
+}
 
 int main(){
-    //-tu odejmienmy 1 by nie bylo znaku '\0'
-    for(int i=0;i<sizeof(t1)/sizeof(char)-1;i++){
-        putchar(t1[i]);
+    int i;
+    //teraz wskaznik wskazuje na hart
+    head = hart; //to jest mozliwe bo wskaznik odwrotnie nie
+    for (i = 0; i < 4; i++){
+        putchar(*(hart+i));
     }
-    printf("\njakis");
-    puts("\nsome tekst ohter");
-    puts(t3[0]);
-    printf("check");
-    char imie[10];
-    printf("\npodaj imie \n");
- //   gets(imie);
-  //  puts(imie);
-    puts(tw);
-  //  puts(*(t3[1]));
+    putchar('\n');
+
+    for (i = 0; i < 4; i++){
+        putchar(*(head+i));
+    }
+    putchar('\n');
+    return 0;
 }
