@@ -2,22 +2,25 @@
 #include <ctype.h>
 #include <stdarg.h>
 
-void some_fn(const double tab[],int);
+char *t1 = "cos tam jest napisane";
+char tw[] = "jakis tekst";
+char *t2 = "www sss kkk ";
+char *t3[3] = {"pierwszy","dwa","trzzy"};
+
+
 int main(){
-const double  tab[10] ={33,32,37,18,19,23,14,1,33,3};
-some_fn(tab,sizeof tab/sizeof(double));
-
-}
-
-void some_fn(const double tab[],int n){
-int i;  
-for( i=0;i<n;i++){
-    printf("%10.2f",tab[i]);
-    if(i % 5==0){
-        putchar('\n');
+    //-tu odejmienmy 1 by nie bylo znaku '\0'
+    for(int i=0;i<sizeof(t1)/sizeof(char)-1;i++){
+        putchar(t1[i]);
     }
-}
-if(i % 6 !=0){
-    putchar('\n');
-}
+    printf("\njakis");
+    puts("\nsome tekst ohter");
+    puts(t3[0]);
+    printf("check");
+    char imie[10];
+    printf("\npodaj imie \n");
+ //   gets(imie);
+  //  puts(imie);
+    puts(tw);
+  //  puts(*(t3[1]));
 }
