@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <string.h>
 
 //dodajemy argumenty 
 //mozna zrobic program z argumentami
