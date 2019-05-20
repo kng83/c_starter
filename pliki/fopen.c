@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//str 396
 //dodajemy argumenty 
 //mozna zrobic program z argumentami
 int main(int argc, char *argv[]){
