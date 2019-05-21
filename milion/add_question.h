@@ -11,69 +11,75 @@
 void addQuestion();
 void badRoute();
 int checkLastQuestionNumber(FILE *fp);
+void checkForInputIsNumber(char *_Buffer);
+void checkForInputIsString(char *_Buffer);
 
 typedef struct DataModel
 {
     char question_number[TEXT_NUMBER];
     char question_level[TEXT_NUMBER];
     char question_description[QUESTION_MAX];
+    char correct_answer_0[ANSWER];
     char fake_answer_1[ANSWER];
     char fake_answer_2[ANSWER];
     char fake_answer_3[ANSWER];
-    char correct_answer_4[ANSWER];
 } DataModel;
 
 void addQuestion()
 {
 
-    printf("\n[2] dodaj pytanie");
 
     FILE *fp; //na plik
     DataModel Question;
     
+    printf("\n[2] dodaj pytanie");
     //**Check data file;
-    if ((fp = fopen("data.csv", "a+")) == NULL)
-    {
-        fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
-        exit(1);
-    }
 
-    checkLastQuestionNumber(fp);
+    if ((fp = fopen("data.csv", "a+")) == NULL){
+        fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
+        badRoute();
+    }
+   
+   int currentQuestion  = checkLastQuestionNumber(fp) + 1;
+   if(currentQuestion<0) badRoute();
+
+    printf("\nWpisujesz pytanie nr %i",currentQuestion);
+
+    //convert question_number to char
+    sprintf(Question.question_number,"%d",currentQuestion);
 
     puts("\nWpisz poziom pytania:");
-    if (!gets(Question.question_level))
-        badRoute();
+    checkForInputIsNumber(Question.question_level);
 
     puts("\nWpisz tresc pytania");
-    if (!gets(Question.question_description))
-        badRoute();
+    checkForInputIsString(Question.question_description);
 
-    puts("\nWpisz pierwsza bledna odpowiedz");
-    if (!gets(Question.fake_answer_1))
-        badRoute();
+    
+    puts("\nWpisz poprawna odpowiedz:");
+    checkForInputIsString(Question.correct_answer_0);
 
-    puts("\nWpisz druga bledna odpowiedz");
-    if (!gets(Question.fake_answer_2))
-        badRoute();
+    puts("\nWpisz bledna odpowiedz nr 1:");
+    checkForInputIsString(Question.fake_answer_1);
 
-    puts("\nWpisz trzecia bledna odpowiedz");
-    if (!gets(Question.fake_answer_3))
-        badRoute();
-
-    puts("\nWpisz poprawna odpowiedz");
-    if (!gets(Question.correct_answer_4))
-        badRoute();
+    puts("\nWpisz bledna odpowiedz nr 2:");
+    checkForInputIsString(Question.fake_answer_2);
+    
+    puts("\nWpisz bledna odpowiedz nr 3:");
+    checkForInputIsString(Question.fake_answer_3);
 
     //Wydrukuj to co napisales do pliku
-    fprintf(fp, "%s;%s;%s;%s;%s;%s",
+    fprintf(fp, "\n%s;%s;%s;%s;%s;%s;%s;",
+            Question.question_number,
             Question.question_level,
             Question.question_description,
+            Question.correct_answer_0,
             Question.fake_answer_1,
             Question.fake_answer_2,
-            Question.fake_answer_3,
-            Question.correct_answer_4);
+            Question.fake_answer_3
+            );
 }
 
+//todo make something with trailing spaces at the end of file
 int checkLastQuestionNumber(FILE *fp){
     char ch;
     long counter, end_position, new_line_position, first_semicolon_in_line;
@@ -84,7 +90,7 @@ int checkLastQuestionNumber(FILE *fp){
         //**Find last semicolon and of line
         fseek(fp, -counter, SEEK_END);
         ch = getc(fp);
-        if(ch== ';'){
+        if( ch== ';'){
             first_semicolon_in_line = end_position - counter;
         }
         if (ch == '\n'){
@@ -92,18 +98,36 @@ int checkLastQuestionNumber(FILE *fp){
             break;
         }
     }
+   // printf("\n%lu oraz %lu oraz %lu",first_semicolon_in_line,new_line_position,counter);
 
-    printf("\nfirst semicollon %lu", first_semicolon_in_line);
-    printf("\nPosition of new line %lu", new_line_position);
-    printf("\nto koniec pliku %i", end_position);
+    //**Finding question number in csv file
+    char q_array[TEXT_NUMBER];
+    char *q_number = q_array;
+    for (int i=0;i<=first_semicolon_in_line-new_line_position;i++){
+        fseek(fp, new_line_position + i,SEEK_SET); 
+         *(q_number+i) =getc(fp);
+    }
 
-    //***Ustw wskaznik na koniec pliku
-    fseek(fp, 0L, SEEK_END); 
-    return 0;
+    //***Set pointer at the end of the file
+    fseek(fp, 0L, SEEK_SET);  
+    return atoi(q_number);
 }
 
-void badRoute()
-{
+void badRoute(){
     printf("\nSomething goes wrong");
     exit(3);
+}
+
+//checking if input is a number
+void checkForInputIsNumber(char *_Buffer){
+    char temp[TEXT_NUMBER];
+    char *ptr_temp = temp;
+    ptr_temp = gets(_Buffer);
+    if(ptr_temp==NULL || atoi(ptr_temp)<0)
+    badRoute();
+}
+
+void checkForInputIsString(char *_Buffer){
+    if(gets(_Buffer)==NULL || *_Buffer=='\0')
+    badRoute();
 }
