@@ -27,12 +27,10 @@ typedef struct DataModel
 
 void addQuestion()
 {
-
-
     FILE *fp; //na plik
     DataModel Question;
     
-    printf("\n[2] dodaj pytanie");
+    printf("\n[2]******* Dodaj pytanie ***************************************");
     //**Check data file;
 
     if ((fp = fopen("data.csv", "a+")) == NULL){
@@ -77,6 +75,18 @@ void addQuestion()
             Question.fake_answer_2,
             Question.fake_answer_3
             );
+
+    printf("\nDodano pytanie.Czy chesz kontynuowac (y/n).");
+      if(fclose(fp)!=0){
+        fprintf(stdin, "Nie moge zamknac pliku \" data \".\n");
+        badRoute();
+      }
+
+    //**Jesli chesz dodawac pytania to daj y
+      char  con[TEXT_NUMBER];
+      if(gets(con)!=NULL && *con =='y'){
+          addQuestion();
+      }
 }
 
 //todo make something with trailing spaces at the end of file
@@ -123,10 +133,11 @@ void checkForInputIsNumber(char *_Buffer){
     char temp[TEXT_NUMBER];
     char *ptr_temp = temp;
     ptr_temp = gets(_Buffer);
-    if(ptr_temp==NULL || atoi(ptr_temp)<0)
+    if(ptr_temp==NULL || atoi(ptr_temp)<=0)
     badRoute();
 }
 
+//checking if input is a string
 void checkForInputIsString(char *_Buffer){
     if(gets(_Buffer)==NULL || *_Buffer=='\0')
     badRoute();

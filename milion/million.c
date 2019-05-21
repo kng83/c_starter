@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include <ctype.h>
 #include "add_question.h"
+#include "game.h"
 
 //**Declarations 
 void start();
@@ -34,13 +35,10 @@ void menuInput(){
    } 
 
    if(choosenNumber == 1) beginGame();
-   if(choosenNumber ==2 ) addQuestion();
+   if(choosenNumber == 2 ) addQuestion();
 
    printf("\nZakonczyles rozgrywke");
    exit(0);
 
 }
 
-void beginGame(){
-    printf("\nGra sie rozpoczela");
-}
