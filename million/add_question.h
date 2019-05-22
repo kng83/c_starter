@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-//#include "model.h"
-
 
 
 #define MAX_LINE 512
