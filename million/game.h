@@ -33,16 +33,13 @@ void playGame()
 
     FILE *fp; //file pointer
     //**Check data file;
-    if ((fp = fopen("data.csv", "r")) == NULL)
-    {
+    if ((fp = fopen("data.csv", "r")) == NULL){
         fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
         badRoute();
     }
     long mappedArr[MAX_QUESTION_LIST][8];
-
-    printf("\n");
     mapperArray(fp, mappedArr);
-  //  testArr(mappedArr);
+    //testArr(mappedArr);
 
 
     for (level = 1; level < MAX_LEVEL; level++){
@@ -147,12 +144,12 @@ void mapperArray(FILE *fp, long arr[][8])
 }
 
 void testArr(long arr[][8]){
-        for (int i = 0L; i < 8; i++){
-        for (int j = 0L; j < 8; j++)
-        {
-            printf(" %lu", arr[i][j]);
+    printf("\n");
+    for (int i = 0L; i < 8; i++){
+        for (int j = 0L; j < 8; j++){
+        printf(" %lu", arr[i][j]);
         }
         printf("\n");
     }
-
 }
+
