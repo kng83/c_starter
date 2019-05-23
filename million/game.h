@@ -15,8 +15,9 @@ void initializeRandom();
 void playGame();
 void findQuestion(int level);
 DataModel readLineByQuestionLevel(int level);
-void mapperArray(FILE *fp, long arr[][8]);
+int mapperArray(FILE *fp, long arr[][8]);
 void testArr(long arr[][8]);
+int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlenght,int level);
 
 //**Main
 void beginGame()
@@ -28,7 +29,6 @@ void beginGame()
 
 void playGame()
 {
-    int level;
     printf("\n[1]******* Rozpoczynamy gre ***************************************");
 
     FILE *fp; //file pointer
@@ -38,13 +38,19 @@ void playGame()
         badRoute();
     }
     long mappedArr[MAX_QUESTION_LIST][8];
-    mapperArray(fp, mappedArr);
-    //testArr(mappedArr);
+    long levelArr[MAX_QUESTION_LIST][8];
+    int questionLines= mapperArray(fp, mappedArr);
+    int level=1;
+    int questionPerLevel = questionsPerLevelArr(levelArr,mappedArr,questionLines,level);
+    printf("\nThere is %i questions",questionLines);
+    printf("\nThere is %i questions of level %i",questionPerLevel,level);
+    testArr(levelArr);
 
 
-    for (level = 1; level < MAX_LEVEL; level++){
-        ;
-    }
+    // for (level = 1; level < MAX_LEVEL; level++){
+    //     ;
+    // }
+    
 }
 
 //** finding question to specific level
@@ -84,12 +90,12 @@ void initializeRandom(){
     srand(time(NULL)); // Initialization, should only be called once.
 }
 
-void mapperArray(FILE *fp, long arr[][8])
+int mapperArray(FILE *fp, long arr[][8])
 {
-    //***Array element look like this
-    //[index][level][start_text][correct_answer_position][fake_answer_pos][fake_2][fake_3][end_position]
-    //1 1 118 149 154 167 170 184
-    //***
+    /*** 
+    * Array element look like this:
+    * [index][level][start_text][correct_answer_position][fake_answer_pos][fake_2][fake_3][end_position]
+    */
     char ch;
     char content[100];
     int shortCounter, colonCounter, newLineCounter;
@@ -141,6 +147,21 @@ void mapperArray(FILE *fp, long arr[][8])
         //printf("end %lu newline %lu",counter,newLineCounter);
     }
     rewind(fp);
+    return newLineCounter;
+}
+
+//Pass array contains elements with choosen level. Return number of elements for random usage.
+int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlenght,int level){
+    int i=1,j=0;
+    for (i; i<fullArrlenght;i++){
+        if(fullArr[i][1] == level){
+            for(int k=0;k<8;k++){
+                levelArr[j][k] = fullArr[i][k];
+            }        
+        j++;  
+        }
+    }
+    return j;
 }
 
 void testArr(long arr[][8]){
