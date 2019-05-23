@@ -42,7 +42,7 @@ void playGame()
 
     printf("\n");
     mapperArray(fp, mappedArr);
-    testArr(mappedArr);
+  //  testArr(mappedArr);
 
 
     for (level = 1; level < MAX_LEVEL; level++){
@@ -91,7 +91,7 @@ void mapperArray(FILE *fp, long arr[][8])
 {
     //***Array element look like this
     //[index][level][start_text][correct_answer_position][fake_answer_pos][fake_2][fake_3][end_position]
-    //1;1;g;b;b;b;
+    //1 1 118 149 154 167 170 184
     //***
     char ch;
     char content[100];
@@ -125,26 +125,25 @@ void mapperArray(FILE *fp, long arr[][8])
             if (colonCounter == 1){
                 arr[newLineCounter][0] = atol(content);
             }
-            //poziom
+            //pick up level
             if (colonCounter == 2){
                 arr[newLineCounter][1] = atol(content); //aby dac poziom pytania
                 arr[newLineCounter][2] = counter+2; //aby wychwycici poczatek pytan
             }
-            //aby wylapac pozycje wszystkie
+            //catch up all positions
             if (colonCounter > 2){
-                arr[newLineCounter][colonCounter] = counter+1;
+                arr[newLineCounter][colonCounter] = counter + 1;
             }
         }
-        if (ch == '\n')
-        {
-            printf("new line is here %lu\n", counter);
-            counter++; //aby ominac podwojny koniec lini
+        if (ch == '\n'){
+            counter++; //resolve double '\n\n'
             shortCounter = 0;
             colonCounter = 0;
             newLineCounter++;
         }
         //printf("end %lu newline %lu",counter,newLineCounter);
     }
+    rewind(fp);
 }
 
 void testArr(long arr[][8]){
