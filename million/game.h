@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//**Constanst
+//**Constans
 #define MAX_LEVEL 10
 #define MAX_QUESTION_ARR 20
 #define MAX_QUESTION_LIST 300
@@ -16,6 +16,7 @@ void playGame();
 void findQuestion(int level);
 DataModel readLineByQuestionLevel(int level);
 void mapperArray(FILE *fp, long arr[][8]);
+void testArr(long arr[][8]);
 
 //**Main
 void beginGame()
@@ -41,18 +42,10 @@ void playGame()
 
     printf("\n");
     mapperArray(fp, mappedArr);
+    testArr(mappedArr);
 
-    for (int i = 0L; i < 8; i++)
-    {
-        for (int j = 0L; j < 8; j++)
-        {
-            printf(" %lu", mappedArr[i][j]);
-        }
-        printf("\n");
-    }
 
-    for (level = 1; level < MAX_LEVEL; level++)
-    {
+    for (level = 1; level < MAX_LEVEL; level++){
         ;
     }
 }
@@ -75,15 +68,13 @@ void findQuestion(int level)
     readLineByQuestionLevel(level);
 }
 
-DataModel readLineByQuestionLevel(int level)
-{
+DataModel readLineByQuestionLevel(int level){
     static DataModel question;             //returned question
     DataModel questions[MAX_QUESTION_ARR]; //array which be filled with question
     FILE *fp;                              //file pointer
 
     //**Check data file;
-    if ((fp = fopen("data.csv", "r")) == NULL)
-    {
+    if ((fp = fopen("data.csv", "r")) == NULL){
         fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
         badRoute();
     }
@@ -92,15 +83,14 @@ DataModel readLineByQuestionLevel(int level)
     return question;
 }
 
-void initializeRandom()
-{
+void initializeRandom(){
     srand(time(NULL)); // Initialization, should only be called once.
 }
 
 void mapperArray(FILE *fp, long arr[][8])
 {
     //***Array element look like this
-    //[level][correct_answer_position][fake_answer_pos][fake_2][fake_3][end_position]
+    //[index][level][start_text][correct_answer_position][fake_answer_pos][fake_2][fake_3][end_position]
     //1;1;g;b;b;b;
     //***
     char ch;
@@ -137,7 +127,7 @@ void mapperArray(FILE *fp, long arr[][8])
             }
             //poziom
             if (colonCounter == 2){
-                arr[newLineCounter][1] = atol(content);
+                arr[newLineCounter][1] = atol(content); //aby dac poziom pytania
                 arr[newLineCounter][2] = counter+2; //aby wychwycici poczatek pytan
             }
             //aby wylapac pozycje wszystkie
@@ -155,4 +145,15 @@ void mapperArray(FILE *fp, long arr[][8])
         }
         //printf("end %lu newline %lu",counter,newLineCounter);
     }
+}
+
+void testArr(long arr[][8]){
+        for (int i = 0L; i < 8; i++){
+        for (int j = 0L; j < 8; j++)
+        {
+            printf(" %lu", arr[i][j]);
+        }
+        printf("\n");
+    }
+
 }
