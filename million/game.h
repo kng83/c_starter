@@ -17,7 +17,8 @@ void findQuestion(int level);
 DataModel readLineByQuestionLevel(int level);
 int mapperArray(FILE *fp, long arr[][8]);
 void testArr(long arr[][8]);
-int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlenght,int level);
+int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlength,int level);
+int randomOf(int);
 
 //**Main
 void beginGame()
@@ -43,8 +44,9 @@ void playGame()
     int level=1;
     int questionPerLevel = questionsPerLevelArr(levelArr,mappedArr,questionLines,level);
     printf("\nThere is %i questions",questionLines);
-    printf("\nThere is %i questions of level %i",questionPerLevel,level);
+    printf("\nThere is %i questions on level %i",questionPerLevel,level);
     testArr(levelArr);
+    printf("random number is %i",randomOf(questionPerLevel));
 
 
     // for (level = 1; level < MAX_LEVEL; level++){
@@ -151,9 +153,9 @@ int mapperArray(FILE *fp, long arr[][8])
 }
 
 //Pass array contains elements with choosen level. Return number of elements for random usage.
-int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlenght,int level){
+int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlength,int level){
     int i=1,j=0;
-    for (i; i<fullArrlenght;i++){
+    for (i; i<fullArrlength;i++){
         if(fullArr[i][1] == level){
             for(int k=0;k<8;k++){
                 levelArr[j][k] = fullArr[i][k];
@@ -174,3 +176,15 @@ void testArr(long arr[][8]){
     }
 }
 
+//*** Random number of pool
+int randomOf(int poolSize){
+    int r;
+    if(poolSize>0){
+        r =  rand() % poolSize;
+        return r;
+    }
+     else {
+         badRoute();
+         return 0;
+     }
+}
