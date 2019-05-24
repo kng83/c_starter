@@ -14,11 +14,13 @@
 void initializeRandom();
 void playGame();
 void findQuestion(int level);
-DataModel readLineByQuestionLevel(int level);
 int mapperArray(FILE *fp, long arr[][8]);
-void testArr(long arr[][8]);
-int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlength,int level);
+void testTwoDimArray(long arr[][8]);
+int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlength, int level);
 int randomOf(int);
+long *takeRandomElement(long levelArr[][8], int);
+void testArray(long arr[8]);
+void readQuestion(FILE *fp, long arr[8]);
 
 //**Main
 void beginGame()
@@ -34,61 +36,66 @@ void playGame()
 
     FILE *fp; //file pointer
     //**Check data file;
-    if ((fp = fopen("data.csv", "r")) == NULL){
+    if ((fp = fopen("data.csv", "r")) == NULL)
+    {
         fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
         badRoute();
     }
     long mappedArr[MAX_QUESTION_LIST][8];
     long levelArr[MAX_QUESTION_LIST][8];
-    int questionLines= mapperArray(fp, mappedArr);
-    int level=1;
-    int questionPerLevel = questionsPerLevelArr(levelArr,mappedArr,questionLines,level);
-    printf("\nThere is %i questions",questionLines);
-    printf("\nThere is %i questions on level %i",questionPerLevel,level);
-    testArr(levelArr);
-    printf("random number is %i",randomOf(questionPerLevel));
+    int questionLines = mapperArray(fp, mappedArr);
 
+    //***To throw full array
+    //testTwoDimArray(mappedArr);
+
+    //In here must start for loop
+    int level = 1;
+    int questionPerLevel = questionsPerLevelArr(levelArr, mappedArr, questionLines, level);
+
+    printf("\nThere are %i questions", questionLines);
+    printf("\nThere are %i questions on level %i", questionPerLevel, level);
+    testTwoDimArray(levelArr);
+    printf("random number is %i", randomOf(questionPerLevel));
+
+    long *questStats;
+    questStats = takeRandomElement(levelArr, questionPerLevel);
+    //***To look on element
+    testArray(questStats);
+    readQuestion(fp, questStats);
 
     // for (level = 1; level < MAX_LEVEL; level++){
     //     ;
     // }
+}
+
+void readQuestion(FILE *fp, long arr[8])
+{
+    char cont[5][100];
+    long counter;
+    long shortCounter = 0;
+    int i,j;
+
+    for ( i = 2, j=0; i <= 6; i++,j++){
+        shortCounter = 0;
+        for (counter = arr[i]; counter < arr[i+1] - 1;){
+            fseek(fp, counter, 0L);
+            cont[j][shortCounter] = getc(fp);
+            shortCounter++;
+            counter++;
+        }
+         cont[j][shortCounter] ='\0';
+    }
+
+    printf("\n1: %s", cont[0]);
+    printf("\n2: %s", cont[1]);
+    printf("\n3: %s", cont[2]);
+    printf("\n4: %s", cont[3]);
+    printf("\n5: %s", cont[4]);
     
 }
 
-//** finding question to specific level
-void findQuestion(int level)
+void initializeRandom()
 {
-
-    //first find every question with level
-    //load to question[]
-    //take random question from question[]
-    //random answers from the question element
-    //print the question
-    //return to make next question
-    //or get back to main menu
-
-    //   int r = rand() % 3;
-    //  printf("\npytanie %i %i",level ,r);
-
-    readLineByQuestionLevel(level);
-}
-
-DataModel readLineByQuestionLevel(int level){
-    static DataModel question;             //returned question
-    DataModel questions[MAX_QUESTION_ARR]; //array which be filled with question
-    FILE *fp;                              //file pointer
-
-    //**Check data file;
-    if ((fp = fopen("data.csv", "r")) == NULL){
-        fprintf(stdin, "Nie moge otworzyc pliku \" words \".\n");
-        badRoute();
-    }
-    fclose(fp);
-
-    return question;
-}
-
-void initializeRandom(){
     srand(time(NULL)); // Initialization, should only be called once.
 }
 
@@ -100,6 +107,7 @@ int mapperArray(FILE *fp, long arr[][8])
     */
     char ch;
     char content[100];
+
     int shortCounter, colonCounter, newLineCounter;
     int questionsIndex = 0;
     long counter, end_position;
@@ -113,34 +121,41 @@ int mapperArray(FILE *fp, long arr[][8])
     colonCounter = 0;
     newLineCounter = 0;
 
-    for (counter; counter <= end_position; counter++){
+    for (counter; counter <= end_position; counter++)
+    {
         //**Find last semicolon and of line
         fseek(fp, counter, 0L);
         ch = getc(fp);
 
-        if (ch != ';' || ch != '\n'){
+        if (ch != ';' || ch != '\n')
+        {
             content[shortCounter] = ch;
             shortCounter++;
         }
-        if (ch == ';'){
+        if (ch == ';')
+        {
             colonCounter++;
             shortCounter = 0; //aby poczatek by w zerze
 
             //index
-            if (colonCounter == 1){
+            if (colonCounter == 1)
+            {
                 arr[newLineCounter][0] = atol(content);
             }
             //pick up level
-            if (colonCounter == 2){
+            if (colonCounter == 2)
+            {
                 arr[newLineCounter][1] = atol(content); //aby dac poziom pytania
-                arr[newLineCounter][2] = counter+2; //aby wychwycici poczatek pytan
+                arr[newLineCounter][2] = counter + 1;   //aby wychwycici poczatek pytan
             }
             //catch up all positions
-            if (colonCounter > 2){
+            if (colonCounter > 2)
+            {
                 arr[newLineCounter][colonCounter] = counter + 1;
             }
         }
-        if (ch == '\n'){
+        if (ch == '\n')
+        {
             counter++; //resolve double '\n\n'
             shortCounter = 0;
             colonCounter = 0;
@@ -153,38 +168,67 @@ int mapperArray(FILE *fp, long arr[][8])
 }
 
 //Pass array contains elements with choosen level. Return number of elements for random usage.
-int questionsPerLevelArr(long levelArr[][8],long fullArr[][8],int fullArrlength,int level){
-    int i=1,j=0;
-    for (i; i<fullArrlength;i++){
-        if(fullArr[i][1] == level){
-            for(int k=0;k<8;k++){
+int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlength, int level)
+{
+    int i = 1, j = 0;
+    for (i; i <= fullArrlength; i++)
+    {
+        if (fullArr[i][1] == level)
+        {
+            for (int k = 0; k < 8; k++)
+            {
                 levelArr[j][k] = fullArr[i][k];
-            }        
-        j++;  
+            }
+            j++;
         }
     }
     return j;
 }
 
-void testArr(long arr[][8]){
-    printf("\n");
-    for (int i = 0L; i < 8; i++){
-        for (int j = 0L; j < 8; j++){
-        printf(" %lu", arr[i][j]);
-        }
-        printf("\n");
+//*** Take random array element
+long *takeRandomElement(long levelArr[][8], int arrlength)
+{
+    static long arr[8];
+    int r = randomOf(arrlength);
+    for (int i = 0; i < 8; i++)
+    {
+        arr[i] = levelArr[r][i];
+    }
+    return arr;
+}
+//*** Random number of pool
+int randomOf(int poolSize)
+{
+    if (poolSize > 0)
+    {
+        return rand() % poolSize;
+    }
+    else
+    {
+        badRoute();
+        return 0;
     }
 }
 
-//*** Random number of pool
-int randomOf(int poolSize){
-    int r;
-    if(poolSize>0){
-        r =  rand() % poolSize;
-        return r;
+//**Test single dimension array
+void testArray(long arr[8])
+{
+    printf("\n");
+    for (int i = 0; i < 8; i++)
+    {
+        printf("%lu;", arr[i]);
     }
-     else {
-         badRoute();
-         return 0;
-     }
+}
+//**Test 2 dimension array
+void testTwoDimArray(long arr[][8])
+{
+    printf("\n");
+    for (int i = 0L; i < 8; i++)
+    {
+        for (int j = 0L; j < 8; j++)
+        {
+            printf("%lu", arr[i][j]);
+        }
+        printf("\n");
+    }
 }

@@ -1,5 +1,7 @@
 question_number;question_level;question_description;correct_answer_4;fake_answer_1;fake_answer_2;fake_answer_3;
-1;1;najwyzszy szczyt na swiecie to:;Rysy;Mount Blanck;K2;Mount Everest;
+1;1;najwyzszy szczyt na swiecie to:;Mount Everest;Rysy;Mont Blanc;K2;
 2;2;Najwieksza wyspa na swiecie to:;Grenlandia;Madagaskar;Wyspa Wielkanocna;Korsyka;
 3;1;Ile wynosi silnia 3?;6;3;0;9;
 4;6;Najglebsze jeziora swiata to:;Bajkal;hancza;Morze Kaspijskie;Morze martwe;
+5;1;Kto byl pierwszym krolem Polski?;Boleslaw Chrobry;Wladyslaw Lokietek;Mieszko 2;Kazimierz Wielki;
+6;1;Kto napisal Quo Vadis?;Henryk Sienkiewicz;Boleslaw Prus;Jan Kochanowski;Fiodor Dostojewski;
