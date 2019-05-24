@@ -21,6 +21,8 @@ int randomOf(int);
 long *takeRandomElement(long levelArr[][8], int);
 void testArray(long arr[8]);
 void readQuestion(FILE *fp, long arr[8]);
+int * makeArrOfRandom(const int startNumber ,const int endNumber);
+void testIntArray(int * arr,int size);
 
 //**Main
 void beginGame()
@@ -54,15 +56,13 @@ void playGame()
 
     printf("\nThere are %i questions", questionLines);
     printf("\nThere are %i questions on level %i", questionPerLevel, level);
-    testTwoDimArray(levelArr);
-    printf("random number is %i", randomOf(questionPerLevel));
 
     long *questStats;
     questStats = takeRandomElement(levelArr, questionPerLevel);
     //***To look on element
-    testArray(questStats);
     readQuestion(fp, questStats);
 
+  
     // for (level = 1; level < MAX_LEVEL; level++){
     //     ;
     // }
@@ -71,6 +71,7 @@ void playGame()
 void readQuestion(FILE *fp, long arr[8])
 {
     char cont[5][100];
+    char cont_out[5][100];
     long counter;
     long shortCounter = 0;
     int i,j;
@@ -91,6 +92,11 @@ void readQuestion(FILE *fp, long arr[8])
     printf("\n3: %s", cont[2]);
     printf("\n4: %s", cont[3]);
     printf("\n5: %s", cont[4]);
+
+    int * arr5;
+    arr5 = makeArrOfRandom(1,6);
+    testIntArray(arr5,5);
+    //Tu pisz
     
 }
 
@@ -184,44 +190,74 @@ int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlengt
     }
     return j;
 }
+//*** make random numbers
+ int * makeArrOfRandom(const int startNumber ,const int endNumber){
+     static int arr[100];
+     static  * arr_pointer;
+     arr_pointer =arr;
+     int i =0;
+     int length;
+     length = endNumber - startNumber;
+     
+     while (1){
+        arr[i] = (rand() % length) + startNumber;
+        if(i == 0){
+            i++;
+            goto con_while;
+        }
+        //Continous searching for new number
+        for (int j=0;j<i;j++){
+            if(arr[j] == arr[i]) goto  con_while;
+        }
+          
+        //increment loop 
+        i++;
+        //Go away;
+        if(i==length){
+            break;
+        }
+        con_while:continue;
+    }
+    return arr_pointer;
+ }
 
 //*** Take random array element
-long *takeRandomElement(long levelArr[][8], int arrlength)
-{
+long *takeRandomElement(long levelArr[][8], int arrlength){
     static long arr[8];
     int r = randomOf(arrlength);
-    for (int i = 0; i < 8; i++)
-    {
+    for (int i = 0; i < 8; i++){
         arr[i] = levelArr[r][i];
     }
     return arr;
 }
 //*** Random number of pool
-int randomOf(int poolSize)
-{
-    if (poolSize > 0)
-    {
+int randomOf(int poolSize){
+    if (poolSize > 0){
         return rand() % poolSize;
     }
-    else
-    {
+    else{
         badRoute();
         return 0;
     }
 }
 
 //**Test single dimension array
-void testArray(long arr[8])
-{
+void testArray(long arr[8]){
     printf("\n");
-    for (int i = 0; i < 8; i++)
-    {
+    for (int i = 0; i < 8; i++){
         printf("%lu;", arr[i]);
     }
 }
+
+//**Test single dimension array
+void testIntArray(int * arr,int size){
+    printf("\n");
+    for (int i = 0; i < size; i++){
+        printf("%i;", arr[i]);
+    }
+}
 //**Test 2 dimension array
-void testTwoDimArray(long arr[][8])
-{
+void testTwoDimArray(long arr[][8]){
     printf("\n");
     for (int i = 0L; i < 8; i++)
     {
