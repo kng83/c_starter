@@ -104,15 +104,13 @@ int checkLastQuestionNumber(FILE *fp){
     char *q_number = q_array;
     for (int i=0;i<=first_semicolon_in_line-new_line_position;i++){
         fseek(fp, new_line_position + i,SEEK_SET); 
-         *(q_number+i) =getc(fp);
+        *(q_number+i) =getc(fp);
     }
 
     //***Set pointer at the end of the file
     fseek(fp, 0L, SEEK_SET);  
     return atoi(q_number);
 }
-
-
 
 //checking if input is a number
 void checkForInputIsNumber(char *_Buffer){

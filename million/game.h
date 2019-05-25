@@ -16,28 +16,33 @@ void playGame();
 void findQuestion(int level);
 int mapperArray(FILE *fp, long arr[][8]);
 void testTwoDimArray(long arr[][8]);
-int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlength, int level);
+int questionsPerLevelArr(long levelArr[][8], long mappedArr[][8], int mappedArrlength, int level);
 int randomOf(int);
 long *takeRandomElement(long levelArr[][8], int);
 void testArray(long arr[8]);
-void readQuestion(FILE *fp, long positionArr[8], char cont [5][100]);
+int readQuestion(FILE *fp, long positionArr[8], char cont [5][100]);
 int * makeArrOfRandom(const int startNumber ,const int endNumber);
-int printAndAnswerTheQuestion(char cont[5][100]);
+int printQuestion(char cont[5][100]);
 void testIntArray(int * arr,int size);
+int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int level);
+extern void start(void);
 
 //**Main
 void beginGame()
 {
-    printf("\nGra sie rozpoczela");
     initializeRandom();
     playGame();
 }
 
 void playGame()
 {
-    printf("\n[1]******* Rozpoczynamy gre ***************************************");
+    printf("\n***************************************************");
+    printf("\n**************** Rozpoczynamy gre *****************");
+    printf("\n***************************************************");
+    printf("\n\n");
 
     FILE *fp; //file pointer
+
     //**Check data file;
     if ((fp = fopen("data.csv", "r")) == NULL)
     {
@@ -47,32 +52,46 @@ void playGame()
     long mappedArr[MAX_QUESTION_LIST][8];
     long levelArr[MAX_QUESTION_LIST][8];
     int questionLines = mapperArray(fp, mappedArr);
+    int level, correct;
 
-    //***To throw full array
-    //testTwoDimArray(mappedArr);
+    //*** Game loop
+    for (level = 1 ,correct =0; level <= MAX_LEVEL;){
+       correct = generateLevelQuestion(fp,mappedArr, questionLines,level);
+       if(correct==1){
+           level++;
+           continue;
+       }else{
+           break;
+           
+       }
+    }
+    if(correct){
+        //show winner banner;
+    } else{
+       // go back to main menu
+        printf("Powrot do menu");
+        return start();
+    }
+}
+int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int level){
+     long levelArr[MAX_QUESTION_LIST][8];
+     int questionPerLevel = questionsPerLevelArr(levelArr, mappedArr, questionLines, level);
+     
+     printf("\n******** Pytanie nr %i wylosowane z puli [%i] *******",level, questionPerLevel);
 
-    //In here must start for loop
-    int level = 1;
-    int questionPerLevel = questionsPerLevelArr(levelArr, mappedArr, questionLines, level);
+     //*** Take random question based level
+     long *questStats;
+     questStats = takeRandomElement(levelArr, questionPerLevel);
 
-    printf("\nThere are %i questions", questionLines);
-    printf("\nThere are %i questions on level %i", questionPerLevel, level);
-
-    long *questStats;
-    questStats = takeRandomElement(levelArr, questionPerLevel);
-    //***To look on element
-    char cont[5][100];
-    readQuestion(fp, questStats,cont);
-    printAndAnswerTheQuestion(cont);
-
-  
-    // for (level = 1; level < MAX_LEVEL; level++){
-    //     ;
-    // }
+     //***Read question from csv file
+     char cont[5][100];
+     readQuestion(fp, questStats,cont);
+     //***Print and answare the question
+     return printQuestion(cont);
 }
 
 //***Take question from file
-void readQuestion(FILE *fp, long positionArr[8], char cont[5][100])
+int readQuestion(FILE *fp, long positionArr[8], char cont[5][100])
 {
     long counter;
     long shortCounter = 0;
@@ -88,49 +107,65 @@ void readQuestion(FILE *fp, long positionArr[8], char cont[5][100])
         }
          cont[j][shortCounter] ='\0';
     }
+    return 0;
 }
-int printAndAnswerTheQuestion(char cont[5][100]){
+//***printing answer of the question with random positions. Returns 0 if correct;
+int printQuestion(char cont[5][100]){
     int * arr5;
     arr5 = makeArrOfRandom(1,5);
-    char * questionA, questionB,questionC ,questionD;
+    char * questionA, *questionB, *questionC , *questionD, *answer;
 
     questionA = cont[arr5[0]];
     questionB = cont[arr5[1]];
     questionC = cont[arr5[2]];
     questionD = cont[arr5[3]];
+
     //Tu pisz
-    printf("\n1: %s", cont[0]);
+    printf("\n\t%s", cont[0]);
     printf("\nA: %s",questionA);
     printf("\nB: %s",questionB);
     printf("\nC: %s",questionC);
     printf("\nD: %s",questionD);
     
     //Pick answer 
-    printf("\nTwoja odpowiedz to:");
+    printf("\n\nTwoja odpowiedz to:");
     char  text[TEXT_NUMBER];
+    int correct =0;
       if(gets(text)!=NULL){
           if((text[0]=='a' || text[0]=='A') && questionA == cont[1]){
-              printf("\nBrawo A to dobra odpowiedz");
+              printf("\n\tBrawo!!! A to dobra odpowiedz.");
+              correct = 1;
           }
           else if((text[0]=='b' || text[0]=='B') && questionB == cont[1]){
-              printf("\nBrawo B to dobra odpowiedz");
+              printf("\n\tBrawo!!! B to dobra odpowiedz.");
+              correct = 1;
           }
           else if((text[0]=='c' || text[0]=='C') && questionC == cont[1]){
-              printf("\nBrawo C to dobra odpowiedz");
+              printf("\n\tBrawo!!! C to dobra odpowiedz.");
+              correct = 1;
           }
           else if((text[0]=='d' || text[0]=='D') && questionD == cont[1]){
-              printf("\nBrawo D to dobra odpowiedz");
+              printf("\n\tBrawo!!! D to dobra odpowiedz.");
+              correct = 1;
           }else{
                printf("\nPrzykro mi to zla odpowiedz.");
                printf("\nPrawidlowa odpowiedz to %s.",cont[1]);
+               correct = 0;
           }
+    }else{
+        printf("\nBrak wpisanego tekstu");
+        correct = 0;
     }
+    printf("\n");
+    return correct;
+
 }
 void initializeRandom()
 {
     srand(time(NULL)); // Initialization, should only be called once.
 }
 
+//***Make array with answers position base on index and level;
 int mapperArray(FILE *fp, long arr[][8])
 {
     /*** 
@@ -200,16 +235,16 @@ int mapperArray(FILE *fp, long arr[][8])
 }
 
 //Pass array contains elements with choosen level. Return number of elements for random usage.
-int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlength, int level)
+int questionsPerLevelArr(long levelArr[][8], long mappedArr[][8], int mappedArrlength, int level)
 {
     int i = 1, j = 0;
-    for (i; i <= fullArrlength; i++)
+    for (i; i <= mappedArrlength; i++)
     {
-        if (fullArr[i][1] == level)
+        if (mappedArr[i][1] == level)
         {
             for (int k = 0; k < 8; k++)
             {
-                levelArr[j][k] = fullArr[i][k];
+                levelArr[j][k] = mappedArr[i][k];
             }
             j++;
         }

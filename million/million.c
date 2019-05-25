@@ -16,14 +16,18 @@ int main(){
 }
 
 void start(){
-    printf("Start gry milionerzy\n");
+    printf("\n");
+    printf("\n***************************************************");
+    printf("\n************** Start gry milionerzy ***************");
+    printf("\n***************************************************");
+    printf("\n");
     printf("[1] rozpocznij gre\n");
     printf("[2] dodaj pytanie\n");
     printf("[3] wcisnij kazdy inny aby zakonczyc\n");
     menuInput();
 }
 
-void menuInput(){
+ void menuInput(){
     char choosenValue[1];
     int choosenNumber;
     
