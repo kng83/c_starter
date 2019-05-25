@@ -11,6 +11,7 @@ void addQuestion();
 int checkLastQuestionNumber(FILE *fp);
 void checkForInputIsNumber(char *_Buffer);
 void checkForInputIsString(char *_Buffer);
+extern void clearScreen(void);
 
 
 

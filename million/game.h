@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 //**Constans
 #define MAX_LEVEL 10
 #define MAX_QUESTION_ARR 20
@@ -26,6 +27,7 @@ int printQuestion(char cont[5][100]);
 void testIntArray(int * arr,int size);
 int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int level);
 extern void start(void);
+extern void clearScreen(void);
 
 //**Main
 void beginGame()
@@ -61,14 +63,15 @@ void playGame()
            level++;
            continue;
        }else{
-           break;
-           
+           break;           
        }
     }
     if(correct){
         //show winner banner;
+        return start();
     } else{
        // go back to main menu
+        clearScreen();
         printf("Powrot do menu");
         return start();
     }
@@ -78,6 +81,7 @@ int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int 
      int questionPerLevel = questionsPerLevelArr(levelArr, mappedArr, questionLines, level);
      
      printf("\n******** Pytanie nr %i wylosowane z puli [%i] *******",level, questionPerLevel);
+     printf("\n");
 
      //*** Take random question based level
      long *questStats;
@@ -160,8 +164,8 @@ int printQuestion(char cont[5][100]){
     return correct;
 
 }
-void initializeRandom()
-{
+//** Random initialization
+void initializeRandom(){
     srand(time(NULL)); // Initialization, should only be called once.
 }
 

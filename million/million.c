@@ -4,11 +4,13 @@
 #include "model.h"
 #include "add_question.h"
 #include "game.h"
+#include "banners.h"
 
 //**Declarations 
 void start();
 void menuInput();
 void beginGame();
+extern void starBanner(void);
 
 
 int main(){
@@ -16,11 +18,7 @@ int main(){
 }
 
 void start(){
-    printf("\n");
-    printf("\n***************************************************");
-    printf("\n************** Start gry milionerzy ***************");
-    printf("\n***************************************************");
-    printf("\n");
+    startBanner();
     printf("[1] rozpocznij gre\n");
     printf("[2] dodaj pytanie\n");
     printf("[3] wcisnij kazdy inny aby zakonczyc\n");
