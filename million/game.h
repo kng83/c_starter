@@ -20,8 +20,9 @@ int questionsPerLevelArr(long levelArr[][8], long fullArr[][8], int fullArrlengt
 int randomOf(int);
 long *takeRandomElement(long levelArr[][8], int);
 void testArray(long arr[8]);
-void readQuestion(FILE *fp, long arr[8]);
+void readQuestion(FILE *fp, long positionArr[8], char cont [5][100]);
 int * makeArrOfRandom(const int startNumber ,const int endNumber);
+int printAndAnswerTheQuestion(char cont[5][100]);
 void testIntArray(int * arr,int size);
 
 //**Main
@@ -60,7 +61,9 @@ void playGame()
     long *questStats;
     questStats = takeRandomElement(levelArr, questionPerLevel);
     //***To look on element
-    readQuestion(fp, questStats);
+    char cont[5][100];
+    readQuestion(fp, questStats,cont);
+    printAndAnswerTheQuestion(cont);
 
   
     // for (level = 1; level < MAX_LEVEL; level++){
@@ -68,17 +71,16 @@ void playGame()
     // }
 }
 
-void readQuestion(FILE *fp, long arr[8])
+//***Take question from file
+void readQuestion(FILE *fp, long positionArr[8], char cont[5][100])
 {
-    char cont[5][100];
-    char cont_out[5][100];
     long counter;
     long shortCounter = 0;
     int i,j;
 
     for ( i = 2, j=0; i <= 6; i++,j++){
         shortCounter = 0;
-        for (counter = arr[i]; counter < arr[i+1] - 1;){
+        for (counter = positionArr[i]; counter < positionArr[i+1] - 1;){
             fseek(fp, counter, 0L);
             cont[j][shortCounter] = getc(fp);
             shortCounter++;
@@ -86,20 +88,44 @@ void readQuestion(FILE *fp, long arr[8])
         }
          cont[j][shortCounter] ='\0';
     }
-
-    printf("\n1: %s", cont[0]);
-    printf("\n2: %s", cont[1]);
-    printf("\n3: %s", cont[2]);
-    printf("\n4: %s", cont[3]);
-    printf("\n5: %s", cont[4]);
-
-    int * arr5;
-    arr5 = makeArrOfRandom(1,6);
-    testIntArray(arr5,5);
-    //Tu pisz
-    
 }
+int printAndAnswerTheQuestion(char cont[5][100]){
+    int * arr5;
+    arr5 = makeArrOfRandom(1,5);
+    char * questionA, questionB,questionC ,questionD;
 
+    questionA = cont[arr5[0]];
+    questionB = cont[arr5[1]];
+    questionC = cont[arr5[2]];
+    questionD = cont[arr5[3]];
+    //Tu pisz
+    printf("\n1: %s", cont[0]);
+    printf("\nA: %s",questionA);
+    printf("\nB: %s",questionB);
+    printf("\nC: %s",questionC);
+    printf("\nD: %s",questionD);
+    
+    //Pick answer 
+    printf("\nTwoja odpowiedz to:");
+    char  text[TEXT_NUMBER];
+      if(gets(text)!=NULL){
+          if((text[0]=='a' || text[0]=='A') && questionA == cont[1]){
+              printf("\nBrawo A to dobra odpowiedz");
+          }
+          else if((text[0]=='b' || text[0]=='B') && questionB == cont[1]){
+              printf("\nBrawo B to dobra odpowiedz");
+          }
+          else if((text[0]=='c' || text[0]=='C') && questionC == cont[1]){
+              printf("\nBrawo C to dobra odpowiedz");
+          }
+          else if((text[0]=='d' || text[0]=='D') && questionD == cont[1]){
+              printf("\nBrawo D to dobra odpowiedz");
+          }else{
+               printf("\nPrzykro mi to zla odpowiedz.");
+               printf("\nPrawidlowa odpowiedz to %s.",cont[1]);
+          }
+    }
+}
 void initializeRandom()
 {
     srand(time(NULL)); // Initialization, should only be called once.
