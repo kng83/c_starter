@@ -28,6 +28,11 @@ void testIntArray(int * arr,int size);
 int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int level);
 extern void start(void);
 extern void clearScreen(void);
+extern void winnerBanner(void);
+extern void playWinnerSound(void);
+extern void pressKeyToContinue(void);
+extern void playGameBanner(void);
+extern void confirmSound(void);
 
 //**Main
 void beginGame()
@@ -38,10 +43,8 @@ void beginGame()
 
 void playGame()
 {
-    printf("\n***************************************************");
-    printf("\n**************** Rozpoczynamy gre *****************");
-    printf("\n***************************************************");
-    printf("\n\n");
+    playGameBanner();
+    confirmSound();
 
     FILE *fp; //file pointer
 
@@ -59,20 +62,23 @@ void playGame()
     //*** Game loop
     for (level = 1 ,correct =0; level <= MAX_LEVEL;){
        correct = generateLevelQuestion(fp,mappedArr, questionLines,level);
-       if(correct==1){
-           level++;
-           continue;
-       }else{
-           break;           
-       }
+       if(!correct) break;
+       level++;
     }
+
     if(correct){
         //show winner banner;
+        winnerBanner();
+        playWinnerSound();
+        pressKeyToContinue();
+        clearScreen();    
         return start();
+        
     } else{
        // go back to main menu
+        printf("\n\t*** Po wcisnieciu przycisku powrocisz do menu ***");
+        pressKeyToContinue();
         clearScreen();
-        printf("Powrot do menu");
         return start();
     }
 }
@@ -125,7 +131,7 @@ int printQuestion(char cont[5][100]){
     questionD = cont[arr5[3]];
 
     //Tu pisz
-    printf("\n\t%s", cont[0]);
+    printf("\n\t*** %s ***\n", cont[0]);
     printf("\nA: %s",questionA);
     printf("\nB: %s",questionB);
     printf("\nC: %s",questionC);
@@ -136,24 +142,38 @@ int printQuestion(char cont[5][100]){
     char  text[TEXT_NUMBER];
     int correct =0;
       if(gets(text)!=NULL){
+          confirmSound();
+
           if((text[0]=='a' || text[0]=='A') && questionA == cont[1]){
-              printf("\n\tBrawo!!! A to dobra odpowiedz.");
+              printf("\n\t*** Brawo!!! A to dobra odpowiedz. ***");
+              pressKeyToContinue();
+              confirmSound();
+              clearScreen();
               correct = 1;
           }
           else if((text[0]=='b' || text[0]=='B') && questionB == cont[1]){
-              printf("\n\tBrawo!!! B to dobra odpowiedz.");
+              printf("\n\t*** Brawo!!! B to dobra odpowiedz. ***");
+              pressKeyToContinue();
+              confirmSound();
+              clearScreen();
               correct = 1;
           }
           else if((text[0]=='c' || text[0]=='C') && questionC == cont[1]){
-              printf("\n\tBrawo!!! C to dobra odpowiedz.");
+              printf("\n\t*** Brawo!!! C to dobra odpowiedz. ***");
+              pressKeyToContinue();
+              confirmSound();
+              clearScreen();
               correct = 1;
           }
           else if((text[0]=='d' || text[0]=='D') && questionD == cont[1]){
-              printf("\n\tBrawo!!! D to dobra odpowiedz.");
+              printf("\n\t*** Brawo!!! D to dobra odpowiedz. ***");
+              pressKeyToContinue();
+              confirmSound();
+              clearScreen();
               correct = 1;
           }else{
-               printf("\nPrzykro mi to zla odpowiedz.");
-               printf("\nPrawidlowa odpowiedz to %s.",cont[1]);
+               printf("\n\t*** Przykro mi to zla odpowiedz. ***");
+               printf("\n\t*** Prawidlowa odpowiedz to %s. ***",cont[1]);
                correct = 0;
           }
     }else{

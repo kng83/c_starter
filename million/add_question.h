@@ -12,6 +12,7 @@ int checkLastQuestionNumber(FILE *fp);
 void checkForInputIsNumber(char *_Buffer);
 void checkForInputIsString(char *_Buffer);
 extern void clearScreen(void);
+extern void confirmSound(void);
 
 
 
@@ -66,15 +67,17 @@ void addQuestion()
             Question.fake_answer_3
             );
 
-    printf("\nDodano pytanie.Czy chesz kontynuowac (y/n).");
+      //**Zamknij plik
       if(fclose(fp)!=0){
         fprintf(stdin, "Nie moge zamknac pliku \" data \".\n");
         badRoute();
       }
 
     //**Jesli chesz dodawac pytania to daj y
+      printf("\nDodano pytanie.Czy chesz kontynuowac (y/n).");
       char  con[TEXT_NUMBER];
       if(gets(con)!=NULL && *con =='y'){
+          confirmSound();
           addQuestion();
       }
 }
