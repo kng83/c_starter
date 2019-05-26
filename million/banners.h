@@ -48,3 +48,15 @@ void pressKeyToContinue(void){
   printf("\n\t Wcisnij przycisk by kontynuowac");
   getchar();
 }
+
+//Jednak w millionerach jest 12 pytan
+void playForCashBanner(int level){
+ long payload[]={0,500,1000,2000,5000,10000,20000,40000,75000,125000,250000,500000,1000000};
+ printf("\n***************************************************");
+ printf("\n\t$$$ Grasz teraz o %d zlotych $$$",payload[level]);
+ printf("\n***************************************************");
+}
+
+void questionLevelToBigBanner(void){
+  printf("\nPytanie powinno miescic sie w przedziale od 0 do %i",MAX_LEVEL);
+}

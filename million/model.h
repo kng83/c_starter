@@ -4,6 +4,7 @@
 #define QUESTION_MAX 100
 #define ANSWER 100
 #define TEXT_NUMBER 5
+#define MAX_LEVEL 12
 
 //**Declarations
 void badRoute();

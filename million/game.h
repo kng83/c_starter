@@ -6,7 +6,7 @@
 
 
 //**Constans
-#define MAX_LEVEL 10
+
 #define MAX_QUESTION_ARR 20
 #define MAX_QUESTION_LIST 300
 #define SEMI_NUMBER 6
@@ -33,6 +33,7 @@ extern void playWinnerSound(void);
 extern void pressKeyToContinue(void);
 extern void playGameBanner(void);
 extern void confirmSound(void);
+extern void playForCashBanner(int level);
 
 //**Main
 void beginGame()
@@ -75,8 +76,6 @@ void playGame()
         return start();
         
     } else{
-       // go back to main menu
-        printf("\n\t*** Po wcisnieciu przycisku powrocisz do menu ***");
         pressKeyToContinue();
         clearScreen();
         return start();
@@ -87,7 +86,7 @@ int generateLevelQuestion( FILE *fp, long mappedArr[][8],int questionLines, int 
      int questionPerLevel = questionsPerLevelArr(levelArr, mappedArr, questionLines, level);
      
      printf("\n******** Pytanie nr %i wylosowane z puli [%i] *******",level, questionPerLevel);
-     printf("\n");
+     playForCashBanner(level);
 
      //*** Take random question based level
      long *questStats;

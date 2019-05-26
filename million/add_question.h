@@ -13,6 +13,11 @@ void checkForInputIsNumber(char *_Buffer);
 void checkForInputIsString(char *_Buffer);
 extern void clearScreen(void);
 extern void confirmSound(void);
+extern void start(void);
+extern void questionLevelToBigBanner(void);
+extern void pressKeyToContinue(void);
+extern void start(void);
+extern void clearScreen(void);
 
 
 
@@ -37,7 +42,7 @@ void addQuestion()
     //convert question_number to char
     sprintf(Question.question_number,"%d",currentQuestion);
 
-    puts("\nWpisz poziom pytania:");
+    printf("\nWpisz poziom pytania (0-%i):",MAX_LEVEL);
     checkForInputIsNumber(Question.question_level);
 
     puts("\nWpisz tresc pytania");
@@ -79,6 +84,9 @@ void addQuestion()
       if(gets(con)!=NULL && *con =='y'){
           confirmSound();
           addQuestion();
+      }
+      else{
+          start();
       }
 }
 
@@ -123,6 +131,13 @@ void checkForInputIsNumber(char *_Buffer){
     ptr_temp = gets(_Buffer);
     if(ptr_temp==NULL || atoi(ptr_temp)<=0)
     badRoute();
+    if(atoi(ptr_temp)>MAX_LEVEL){
+        questionLevelToBigBanner();
+        pressKeyToContinue();
+        clearScreen();
+        start();
+    }
+    
 }
 
 //checking if input is a string
