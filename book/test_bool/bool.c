@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-
+//str 345
 bool zle_granice(long poczatek, long koniec, long dolna, long gorna)
 {
     bool zle = false;
@@ -26,5 +26,6 @@ bool zle_granice(long poczatek, long koniec, long dolna, long gorna)
 }
 
 int main(){
-    zle_granice(4L,10L, 2L, 3L);
+    bool w = zle_granice(4L,10L, 2L, 30L);
+    printf("what is %u, %u , %u",w,false,true);
 }
