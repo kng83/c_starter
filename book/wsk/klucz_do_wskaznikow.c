@@ -11,6 +11,10 @@ suma += *poczatek++;
 suma += *paczatek; //wersja windocza
 poczatek++;
 //skonczyles na430
+
+//i jeszcze to (wzordla 2 elementowej tablicy)
+zippo[m][n] == *(*(zippo + m) + n)
+pz[m][n] == *(*(pz + m) + n)
 */
 
 //przyklad str 424
