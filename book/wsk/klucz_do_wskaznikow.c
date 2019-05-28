@@ -6,8 +6,7 @@ daty + 2 == &daty[2] // ten sam adres
 //i jeszcze to (element tablicy bez numera to adres pierwszego elementu)
 domek == &domek[0]
 
-//i jeszcze suma czgos (od razu inkrementacja 
-)
+//i jeszcze suma czegos (od razu inkrementacja w petli)
 suma += *poczatek++;
 suma += *paczatek; //wersja windocza
 poczatek++;
