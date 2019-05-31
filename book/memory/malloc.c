@@ -13,6 +13,8 @@ int main(void)
         puts("Niepoprawna liczba, do widzenia.");
         exit(EXIT_FAILURE);
     }
+
+    //przydzielenie malloc
     wsk = (double *)malloc(max * sizeof(double));
     if (wsk == NULL)
     {
@@ -21,7 +23,9 @@ int main(void)
     }
     /* wsk wskazuje na tablice o liczbie elementow rownej max */
     puts("Podaj elementy (k to koniec):\n");
-    while (i < max && scanf("%lf", &wsk[i]) == 1)
+
+    // while (i < max && scanf("%lf", &wsk[i]) == 1) lub
+    while (i < max && scanf("%lf", wsk+i) == 1)
         ++i;
     printf("Oto %d wprowadzonych elementow:\n", liczba = i);
     for (i = 0; i < liczba; i++)
@@ -33,6 +37,7 @@ int main(void)
     if (i % 7 != 0)
         putchar('\n');
     puts("Koniec.");
+    //uwolnij pamiec
     free(wsk);
     return 0;
 }
