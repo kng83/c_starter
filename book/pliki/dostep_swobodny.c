@@ -14,7 +14,7 @@ int main()
     // tworzy zestaw wartosci typu double
     for (i = 0; i < DL_TAB; i++)
         liczby[i] = 100.0 * i + 1.0 / (i + 1);
-    // probuje otworzyc plik
+    // probuje otworzyc plik w formacie bitowym
     if ((plikwewy = fopen(plik, "wb")) == NULL)
     {
         fprintf(stderr, "Blad otwarcia pliku %s do zapisu.\n", plik);
@@ -34,7 +34,10 @@ int main()
     while (scanf("%d", &i) == 1 && i >= 0 && i < DL_TAB)
     {
         poz = (long)i * sizeof(double); /* oblicza offset */
+        //tu szukamy pozycji poniewaz elementy wpisane do pliku sa tablica typu double
+        //wyliczenie pozycji jest proste
         fseek(plikwewy, poz, SEEK_SET); /* przechodzi w odp. miejsce */
+        //fread i fwrite to dobre do zapisywanie w trybie binarnym bez utraty precyzji
         fread(&wartosc, sizeof(double), 1, plikwewy);
 
         printf("Wartosc pod tym indeksem to %f.\n", wartosc);
