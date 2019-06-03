@@ -43,4 +43,23 @@ str 682
 
 void pokaz(void (* fw)(char *), char * lan);
 funckja ktorej pierwszym argumentem jest wskaznik do funkcji nastepnym tablica
+
+// mozna jeszcze zrobic tablice wskaznikow do funkcji
+typedef void (*V_WF_WCHAR)(char *);
+void pokaz(V_WF_WCHAR wp, char *);
+V_WF_WCHAR wfun;
+//Pozniej taka deklaracja funckji
+V_WF_WCHAR tabwf[4] = {DuzeLit, MaleLit, Odwroc, Atrapa};
+str 683
+
+//Prosty przyklad z wskanikiem do funkcji
+
+#include <math.h> /* deklaruje double sin(double) */
+...
+double (*pdf)(double);
+double x;
+pdf = sin;
+x = (*pdf)(1.2); // wywoluje sin(1.2)
+x = pdf(1.2); // takze wywoluje sin(1.2)
+...
  -->
