@@ -67,3 +67,16 @@ struct ksiazka prezent = {
  .autor = "Adam Mickiewicz",
  .tytul = "Pan Tadeusz"};
 */
+
+/*
+Przykład:
+struct {
+ int kod;
+ float cena;
+} artykul, * wskst;
+wskst = &artykul;
+wskst->kod = 3451;
+Ostatnia instrukcja nadaje wartość składnikowi kod struktury artykul. Poniższe
+trzy wyrażenia są równoważne:
+wskst->kod artykul.kod (*wskst).kod
+*/
