@@ -4,9 +4,16 @@
 #include <stdbool.h>
 /* TUTAJ WSTAW DEFINICJE TYPU POZYCJA */
 /* NA PRZYKLAD, */
-typedef int Pozycja; // na potrzeby programu uzyj_k.c
-/* LUB typedef struct pozycja {int slon; int zyrafa;} Pozycja; */
+//typedef int Pozycja; // na potrzeby programu uzyj_k.c
+
 #define MAXKOLEJKA 10
+
+typedef struct pozycja
+{
+ long przybycie; /* czas wejscia klienta do kolejki */
+ int czaskons; /* liczba zadanych minut konsultacji */
+} Pozycja;
+
 typedef struct wezel
 {
     Pozycja pozycja;
@@ -18,6 +25,8 @@ typedef struct kolejka
     Wezel *tyl;   /* wskaznik do tylu kolejki */
     int pozycje;  /* liczba pozycji w kolejce */
 } Kolejka;
+
+
 
 /* dzialanie: inicjalizuje kolejke */
 /* warunek wstepny: wk wskazuje na kolejke */
