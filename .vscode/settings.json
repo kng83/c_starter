@@ -6,5 +6,6 @@
         "ctype.h": "c",
         "storage.h": "c",
         "pthread.h": "c"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }

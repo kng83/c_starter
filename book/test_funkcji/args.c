@@ -17,6 +17,7 @@ int main(void)
 }
 double sumuj(int lim, ...)
 {
+
     va_list ap; // deklaracja obiektu przechowujacego argumenty
     double suma = 0;
     int i;

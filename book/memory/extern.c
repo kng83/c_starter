@@ -12,8 +12,7 @@ int main(void)
     printf("Musiales podejrzec!\n");
     return 0;
 }
-void krytyka(void)
-{
+void krytyka(void){
     /* pominieto powtorna (opcjonalna) deklaracje */
     printf("Nie masz szczescia, sprobuj ponownie.\n");
     scanf("%d", &jednostki);
