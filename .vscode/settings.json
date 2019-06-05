@@ -5,7 +5,8 @@
         "ssp.h": "c",
         "ctype.h": "c",
         "storage.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "zmalloc.h": "c"
     },
     "git.ignoreLimitWarning": true
 }
