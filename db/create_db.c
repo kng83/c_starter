@@ -4,8 +4,8 @@
 #include "adv_malloc.h"
 
 #define KEY_LENGTH 24
-#define VALUE_LENGTH sizeof(size_t) //typicall 8 in 64bit system
-#define CELLS 4
+#define VALUE_LENGTH sizeof(size_t)  // typicall 8 in 64bit system
+#define CELLS 10
 
 typedef struct ptr_Arr {
     char key[KEY_LENGTH];
@@ -14,26 +14,30 @@ typedef struct ptr_Arr {
 
 // Declarations
 void savePtrByKey(ptr_Arr* arr, char* key, char* value);
-void findKeyInArr(size_t* arr_ptr, int elm_size, char* key);
+void* findKeyInArr(size_t* arr_ptr, int elm_size, char* key);
 
 // Main
 int main() {
     ptr_Arr mArr[CELLS];
     size_t* ptr;
-    printf("\nthis is pth %p", ptr);
+ //   printf("\nthis is pth %p", ptr);
     ptr = adv_malloc(sizeof mArr);
 
-    printf("\nsize is %i",adv_allocated_size(ptr));
-    strcpy(((ptr_Arr*)(ptr + 0))->value , "Bobo");
-    strcpy(((ptr_Arr*)(ptr + 1))->value , "Pies");
-    strcpy(((ptr_Arr*)(ptr + 2))->value , "Dom");
-    strcpy(((ptr_Arr*)(ptr + 3))->value , "Ziom");
+    printf("\nsize is %i", adv_allocated_size(ptr));
+    strcpy(((ptr_Arr*)(ptr + 0))->key, "Bobo");
+    strcpy(((ptr_Arr*)(ptr + 1))->key, "Com");
+    strcpy(((ptr_Arr*)(ptr + 2))->key, "Czas");
+    strcpy(((ptr_Arr*)(ptr + 3))->key, "Dom");
+    strcpy(((ptr_Arr*)(ptr + 4))->key, "Gom");
+    strcpy(((ptr_Arr*)(ptr + 5))->key, "Kret");
+    strcpy(((ptr_Arr*)(ptr + 6))->key, "Net");
+    strcpy(((ptr_Arr*)(ptr + 7))->key, "Orka");
+    strcpy(((ptr_Arr*)(ptr + 8))->key, "Pies");
+    strcpy(((ptr_Arr*)(ptr + 9))->key, "Ziom");
 
-    char val[10] = "Bobo";
-    char key[10] = "kot";
-    savePtrByKey(&mArr[0], key, val);
-    printf("\nPrint some answers %s", (&mArr[0])->value);
-    findKeyInArr(ptr,sizeof(ptr_Arr),val);
+    //char val[10] = "Dom";
+    char key[10] = "Czas";
+    findKeyInArr(ptr, sizeof(ptr_Arr), key);
 }
 
 // saving pointer by key
@@ -42,53 +46,45 @@ void savePtrByKey(ptr_Arr* arr, char* key, char* value) {
     strcpy(arr->value, value);
 }
 
-//
-void findKeyInArr(size_t* arr_ptr, int elm_size, char* key){
-    //first take the length of array which is hidden in -1 element of array
-    //next check name of middle element of array 
-    //when middle element has name is alphabetic smaller take new new middle element
-    //when programs find good key return value
-    //when key not found return -1
-
-    //length 
-
-    int middleElement = (adv_allocated_size(arr_ptr)/elm_size)/2;
-    int lastElement = adv_allocated_size(arr_ptr)/elm_size;
-
-    long middlePosition = middleElement * elm_size;
-    printf("\nlenght is %i",middleElement);
-    printf("\nMiddlePosition is %lu",middlePosition);
-    printf("\nWhat is in middle position %s",((ptr_Arr*)(arr_ptr + middleElement))->value);
-
-    int ans = strcmp(key,((ptr_Arr*)(arr_ptr + middleElement))->value);
-    printf("\n Compare %i",strcmp("Bobol","Bobos"));
-    printf("\n Compare %i",strcmp("Bobos","Bobo"));
-
-    int m_element = middleElement;
-    int l_element = lastElement;
-    int check = 0;
-    char answer[15];
-    while(check = strcmp(key,((ptr_Arr*)(arr_ptr + m_element))->value)){
-        printf("\nelement value %i, last element %i , check %i",m_element,l_element,check);
-        //break condition if there is no elements to search
-        if(m_element == 0 || m_element == lastElement){
-            strcpy(answer,"key");
+// first take the length of array which is hidden in -1 element of array
+// next check name of middle element of array
+// when middle element has name is alphabetic smaller take new new middle
+// element when programs find good key return value when key not found return
+void* findKeyInArr(size_t* arr_ptr, int elm_size, char* key) {
+    int lim_up = adv_allocated_size(arr_ptr) / elm_size;
+    int lim_down = 0;
+    int middle_element = (int)(lim_up / 2);
+    int check = 1;
+    // Find key in binary tree
+    printf("\nmiddle element is %i",middle_element);
+    while (check) {
+        printf("\nthis is key %s",((ptr_Arr*)(arr_ptr + middle_element))->key);
+        check = strcmp(key, ((ptr_Arr*)(arr_ptr + middle_element))->key);
+      
+        // key found
+        if (check == 0) {
+            printf("\nfound");
             break;
         }
-        else if(check < 0){
-          m_element/=2;
-          continue;
+        // key not found
+        else if (middle_element == 0 || middle_element == lim_up) {
+            printf("\nnot Found");
+            break;
         }
-        else if(check >0){
-            m_element += (l_element - m_element)/2;
+        // key is on the left
+        else if (check < 0) {
+            lim_up = middle_element; //aby zawezic gore
+            middle_element = (middle_element - lim_down)/2 + lim_down;
+            printf("\n<0 i %i", middle_element);
             continue;
         }
-        else if(check==0){
-            strcpy(answer,"key");
-            break;
+        // key is on the right
+        else if (check > 0) {
+            printf("\n>0 i %i", middle_element);
+             lim_down = middle_element;
+             middle_element = (lim_up + lim_down) / 2;
+            continue;
         }
-       
-       break;
+        break;
     }
-     printf("\nthere is check %s",answer);
 }
