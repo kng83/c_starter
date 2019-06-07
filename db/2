@@ -1,0 +1,238 @@
+	.file	"create_db.c"
+	.text
+	.def	__main;	.scl	2;	.type	32;	.endef
+	.section .rdata,"dr"
+.LC0:
+	.ascii "\12size is %i\0"
+	.text
+	.globl	main
+	.def	main;	.scl	2;	.type	32;	.endef
+	.seh_proc	main
+main:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	subq	$384, %rsp
+	.seh_stackalloc	384
+	leaq	128(%rsp), %rbp
+	.seh_setframe	%rbp, 128
+	.seh_endprologue
+	call	__main
+	movl	$320, %ecx
+	call	adv_malloc
+	movq	%rax, 248(%rbp)
+	movq	248(%rbp), %rax
+	movq	%rax, %rcx
+	call	adv_allocated_size
+	movq	%rax, %rdx
+	leaq	.LC0(%rip), %rcx
+	call	printf
+	movq	248(%rbp), %rax
+	movl	$1868721986, (%rax)
+	movb	$0, 4(%rax)
+	movq	248(%rbp), %rax
+	addq	$8, %rax
+	movl	$7171907, (%rax)
+	movq	248(%rbp), %rax
+	addq	$16, %rax
+	movl	$1935768131, (%rax)
+	movb	$0, 4(%rax)
+	movq	248(%rbp), %rax
+	addq	$24, %rax
+	movl	$7171908, (%rax)
+	movq	248(%rbp), %rax
+	addq	$32, %rax
+	movl	$7171911, (%rax)
+	movq	248(%rbp), %rax
+	addq	$40, %rax
+	movl	$1952805451, (%rax)
+	movb	$0, 4(%rax)
+	movq	248(%rbp), %rax
+	addq	$48, %rax
+	movl	$7628110, (%rax)
+	movq	248(%rbp), %rax
+	addq	$56, %rax
+	movl	$1634431567, (%rax)
+	movb	$0, 4(%rax)
+	movq	248(%rbp), %rax
+	addq	$64, %rax
+	movl	$1936025936, (%rax)
+	movb	$0, 4(%rax)
+	movq	248(%rbp), %rax
+	addq	$72, %rax
+	movl	$1836018010, (%rax)
+	movb	$0, 4(%rax)
+	movabsq	$418381063502, %rax
+	movq	%rax, -90(%rbp)
+	movw	$0, -82(%rbp)
+	leaq	-90(%rbp), %rdx
+	movq	248(%rbp), %rax
+	movq	%rdx, %r8
+	movl	$32, %edx
+	movq	%rax, %rcx
+	call	findKeyInArr
+	movl	$0, %eax
+	addq	$384, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	savePtrByKey
+	.def	savePtrByKey;	.scl	2;	.type	32;	.endef
+	.seh_proc	savePtrByKey
+savePtrByKey:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	%r8, 32(%rbp)
+	movq	16(%rbp), %rax
+	movq	24(%rbp), %rdx
+	movq	%rax, %rcx
+	call	strcpy
+	movq	16(%rbp), %rax
+	addq	$24, %rax
+	movq	32(%rbp), %rdx
+	movq	%rax, %rcx
+	call	strcpy
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+.LC1:
+	.ascii "\12middle element is %i\0"
+	.align 8
+.LC2:
+	.ascii "\12this is key %s and middle is %i\0"
+.LC3:
+	.ascii "\12found\0"
+.LC4:
+	.ascii "\12not Found\0"
+.LC5:
+	.ascii "\12<0 i %i\0"
+.LC6:
+	.ascii "\12>0 i %i\0"
+	.text
+	.globl	findKeyInArr
+	.def	findKeyInArr;	.scl	2;	.type	32;	.endef
+	.seh_proc	findKeyInArr
+findKeyInArr:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movq	%r8, 32(%rbp)
+	movq	16(%rbp), %rcx
+	call	adv_allocated_size
+	movq	%rax, %rcx
+	movl	24(%rbp), %eax
+	movslq	%eax, %r9
+	movq	%rcx, %rax
+	movl	$0, %edx
+	divq	%r9
+	movl	%eax, -4(%rbp)
+	movl	$0, -8(%rbp)
+	movl	-4(%rbp), %eax
+	movl	%eax, %edx
+	shrl	$31, %edx
+	addl	%edx, %eax
+	sarl	%eax
+	movl	%eax, -16(%rbp)
+	movl	$1, -12(%rbp)
+	movl	-16(%rbp), %eax
+	movl	%eax, %edx
+	leaq	.LC1(%rip), %rcx
+	call	printf
+	jmp	.L5
+.L12:
+	movl	-4(%rbp), %edx
+	movl	-8(%rbp), %eax
+	addl	%edx, %eax
+	movl	%eax, %edx
+	shrl	$31, %edx
+	addl	%edx, %eax
+	sarl	%eax
+	movl	%eax, -16(%rbp)
+	movl	-16(%rbp), %eax
+	cltq
+	leaq	0(,%rax,8), %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movq	%rax, %rdx
+	movl	-16(%rbp), %eax
+	movl	%eax, %r8d
+	leaq	.LC2(%rip), %rcx
+	call	printf
+	movl	-16(%rbp), %eax
+	cltq
+	leaq	0(,%rax,8), %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movq	%rax, %rdx
+	movq	32(%rbp), %rax
+	movq	%rax, %rcx
+	call	strcmp
+	movl	%eax, -12(%rbp)
+	cmpl	$0, -12(%rbp)
+	jne	.L6
+	leaq	.LC3(%rip), %rcx
+	call	printf
+	jmp	.L7
+.L6:
+	movl	-16(%rbp), %eax
+	cmpl	-8(%rbp), %eax
+	je	.L8
+	movl	-16(%rbp), %eax
+	cmpl	-4(%rbp), %eax
+	jne	.L9
+.L8:
+	leaq	.LC4(%rip), %rcx
+	call	printf
+	jmp	.L7
+.L9:
+	cmpl	$0, -12(%rbp)
+	jns	.L10
+	movl	-16(%rbp), %eax
+	movl	%eax, -4(%rbp)
+	movl	-16(%rbp), %eax
+	movl	%eax, %edx
+	leaq	.LC5(%rip), %rcx
+	call	printf
+	jmp	.L5
+.L10:
+	cmpl	$0, -12(%rbp)
+	jle	.L13
+	movl	-16(%rbp), %eax
+	movl	%eax, -8(%rbp)
+	movl	-16(%rbp), %eax
+	movl	%eax, %edx
+	leaq	.LC6(%rip), %rcx
+	call	printf
+	jmp	.L5
+.L13:
+	nop
+.L5:
+	cmpl	$0, -12(%rbp)
+	jne	.L12
+.L7:
+	nop
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (x86_64-win32-seh-rev0, Built by MinGW-W64 project) 8.1.0"
+	.def	adv_malloc;	.scl	2;	.type	32;	.endef
+	.def	adv_allocated_size;	.scl	2;	.type	32;	.endef
+	.def	printf;	.scl	2;	.type	32;	.endef
+	.def	strcpy;	.scl	2;	.type	32;	.endef
+	.def	strcmp;	.scl	2;	.type	32;	.endef
