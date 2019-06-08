@@ -6,12 +6,13 @@
 #include "db_func.h"
 
 // declarations
-extern void* findKeyInArr(size_t* arr_ptr, int elm_size, char* key);
+extern void* findKeyInArr(ptr_Arr* arr_ptr, int elm_size, char* key);
 
 int main() {
     ptr_Arr mArr[CELLS];
     size_t* ptr;
-    ptr = adv_malloc(sizeof mArr);
+    ptr_Arr* ptr2;
+    ptr2 = adv_malloc(sizeof mArr);
 
     // Fake pointer area
     int one = 1;
@@ -34,34 +35,24 @@ int main() {
                             "Nat",   "Netia", "Olcha", "Ospa", "Pack", "Piesek",
                             "Pwc",   "Zam",   "Zka"};
 
-    printf("\nsize is %i", adv_allocated_size(ptr));
-    strcpy(((ptr_Arr*)(ptr + 0))->key, "Bobo");
-    strcpy(((ptr_Arr*)(ptr + 1))->key, "Com");
-    strcpy(((ptr_Arr*)(ptr + 2))->key, "Czas");
-    strcpy(((ptr_Arr*)(ptr + 3))->key, "Dom");
-    strcpy(((ptr_Arr*)(ptr + 4))->key, "Gom");
-    strcpy(((ptr_Arr*)(ptr + 5))->key, "Kret");
-    strcpy(((ptr_Arr*)(ptr + 6))->key, "Net");
-    strcpy(((ptr_Arr*)(ptr + 7))->key, "Orka");
-    strcpy(((ptr_Arr*)(ptr + 8))->key, "Pies");
-    strcpy(((ptr_Arr*)(ptr + 9))->key, "Ziom");
+    printf("\nsize is %i", adv_allocated_size(ptr2));
+    strcpy((ptr2 + 0)->key, "Bobo");
+    strcpy((ptr2 + 1)->key, "Com");
+    strcpy((ptr2 + 2)->key, "Czas");
+    strcpy((ptr2 + 3)->key, "Dom");
+    strcpy((ptr2 + 4)->key, "Gom");
+    strcpy((ptr2 + 5)->key, "Kret");
+    strcpy((ptr2 + 6)->key, "Net");
+    strcpy((ptr2 + 7)->key, "Orka");
+    strcpy((ptr2 + 8)->key, "Pies");
+    strcpy((ptr2 + 9)->key, "Ziom");
 
-    // strcpy((ptr + 0)->key, "Bobo");
-    // strcpy((ptr + 1)->key, "Com");
-    // strcpy((ptr + 2)->key, "Czas");
-    // strcpy((ptr + 3)->key, "Dom");
-    // strcpy((ptr + 4)->key, "Gom");
-    // strcpy((ptr + 5)->key, "Kret");
-    // strcpy((ptr + 6)->key, "Net");
-    // strcpy((ptr + 7)->key, "Orka");
-    // strcpy((ptr + 8)->key, "Pies");
-    // strcpy((ptr + 9)->key, "Ziom");
 
     // pointer assignment
-    //  ((ptr_Arr*)(ptr + 0)).value_ptr = ptr_one;
-    //  ((ptr_Arr*)(ptr + 1)).value_ptr = ptr_two;
-    //  ((ptr_Arr*)(ptr + 2)).value_ptr = ptr_three;
-    //  ((ptr_Arr*)ptr + 3)).value_ptr = ptr_four;
+     (ptr2 + 0)->value_ptr = ptr_one;
+     (ptr2 + 1)->value_ptr = ptr_two;
+     (ptr2 + 2)->value_ptr = ptr_three;
+     (ptr2 + 3)->value_ptr = ptr_four;
 
     // test true array
     size_t* ret_ptr = NULL;
@@ -69,29 +60,29 @@ int main() {
     printf("\n----------------begin good------------------\n");
     for (int i = 0; i < 10; i++) {
         printf("\nfinding key %s", keyTrueArr[i]);
-        ret_ptr = findKeyInArr(ptr, sizeof(ptr_Arr), keyTrueArr[i]);
+        ret_ptr = findKeyInArr(ptr2, sizeof(ptr_Arr), keyTrueArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
     printf("\n----------------begin fake------------------\n");
     for (int i = 0; i < 21; i++) {
         printf("\nfinding key %s", keyFakeArr[i]);
-        ret_ptr = findKeyInArr(ptr, sizeof(ptr_Arr), keyFakeArr[i]);
+        ret_ptr = findKeyInArr(ptr2, sizeof(ptr_Arr), keyFakeArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
 
     // Pointer print
-    // printf("\nPtr_one %p",((ptr_Arr*)(ptr + 0))->value_ptr);
-    // printf("\nPtr_two %p",((ptr_Arr*)(ptr + 1))->value_ptr);
-    // printf("\nPtr_three %p",((ptr_Arr*)(ptr + 2))->value_ptr);
-    // printf("\nPtr_four %p",((ptr_Arr*)(ptr + 3))->value_ptr);
+    printf("\nPtr_one %p",(ptr2+ 0)->value_ptr);
+    printf("\nPtr_two %p",(ptr2 + 1)->value_ptr);
+    printf("\nPtr_three %p",(ptr2 + 2)->value_ptr);
+    printf("\nPtr_four %p",(ptr2 + 3)->value_ptr);
 
     // print struct element
-    printf("\nKey_0 %s", ((ptr_Arr*)(ptr + 0))->key);
-    printf("\nKey_0 address %p", &(((ptr_Arr*)(ptr + 0))->key));
-    printf("\nKey_1 %s", ((ptr_Arr*)(ptr + 1))->key);
-    printf("\nKey_1 address %p", &(((ptr_Arr*)(ptr + 1))->key));
-    printf("\nKey_2 %s", ((ptr_Arr*)(ptr + 2))->key);
-    printf("\nKey_2 address %p", &(((ptr_Arr*)(ptr + 2))->key));
+    printf("\nKey_0 %s",(ptr2 + 0)->key);
+    printf("\nKey_0 address %p", &(ptr2 + 0)->key);
+    printf("\nKey_1 %s",(ptr2 + 1)->key);
+    printf("\nKey_1 address %p", &(ptr2 + 1)->key);
+    printf("\nKey_2 %s",(ptr2 + 2)->key);
+    printf("\nKey_2 address %p", &(ptr2 + 2)->key);
 }

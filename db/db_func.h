@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <string.h>
 
-void* findKeyInArr(size_t* arr_ptr, int elm_size, char* key); 
+void* findKeyInArr(ptr_Arr* arr_ptr, int elm_size, char* key); 
 
 // first take the length of array which is hidden in -1 element of array
 // next check name of middle element of array
 // when middle element has name is alphabetic smaller take new new middle
 // element when programs find good key return value when key not found return
-void* findKeyInArr(size_t* arr_ptr, int elm_size, char* key) {
+void* findKeyInArr(ptr_Arr* arr_ptr, int elm_size, char* key) {
     int lim_up = adv_allocated_size(arr_ptr) / elm_size;
     int lim_down = 0;
     int middle_element;
