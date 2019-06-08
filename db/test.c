@@ -6,7 +6,7 @@
 #include "db_func.h"
 
 // declarations
-extern void* findKeyInArr(ptr_Arr* arr_ptr, int elm_size, char* key);
+extern void* findKeyInArr(ptr_Arr* arr_ptr, char* key);
 
 int main() {
     ptr_Arr mArr[CELLS];
@@ -60,14 +60,14 @@ int main() {
     printf("\n----------------begin good------------------\n");
     for (int i = 0; i < 10; i++) {
         printf("\nfinding key %s", keyTrueArr[i]);
-        ret_ptr = findKeyInArr(ptr2, sizeof(ptr_Arr), keyTrueArr[i]);
+        ret_ptr = findKeyInArr(ptr2, keyTrueArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
     printf("\n----------------begin fake------------------\n");
     for (int i = 0; i < 21; i++) {
         printf("\nfinding key %s", keyFakeArr[i]);
-        ret_ptr = findKeyInArr(ptr2, sizeof(ptr_Arr), keyFakeArr[i]);
+        ret_ptr = findKeyInArr(ptr2, keyFakeArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
