@@ -6,7 +6,8 @@
         "ctype.h": "c",
         "storage.h": "c",
         "pthread.h": "c",
-        "zmalloc.h": "c"
+        "zmalloc.h": "c",
+        "types.h": "c"
     },
     "git.ignoreLimitWarning": true
 }
