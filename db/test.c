@@ -6,12 +6,14 @@
 #include "db_func.h"
 
 // declarations
-extern void* findKeyInArr(ptr_Arr* arr_ptr, char* key);
+extern void* findKeyInArr(key_val* arr_ptr, char* key);
+extern int pushKeyPtrTooArr(key_val* arr_ptr, char* key, size_t value);
+
 
 int main() {
-    ptr_Arr mArr[CELLS];
+    key_val mArr[CELLS];
     size_t* ptr;
-    ptr_Arr* ptr2;
+    key_val* ptr2;
     ptr2 = adv_malloc(sizeof mArr);
 
     // Fake pointer area
@@ -23,6 +25,7 @@ int main() {
     size_t* ptr_two;
     size_t* ptr_three;
     size_t* ptr_four;
+    size_t five;
     ptr_one = (size_t*)&one;
     ptr_two = (size_t*)&two;
     ptr_three = (size_t*)&three;
@@ -85,4 +88,13 @@ int main() {
     printf("\nKey_1 address %p", &(ptr2 + 1)->key);
     printf("\nKey_2 %s",(ptr2 + 2)->key);
     printf("\nKey_2 address %p", &(ptr2 + 2)->key);
+     printf("\nKey_9 %s",(ptr2 + 9)->key);
+
+pushKeyPtrTooArr(ptr2, "Zka",five );
+
+// pushKeyPtrTooArr(ptr2, "Piko",five );
+// pushKeyPtrTooArr(ptr2, "Bobos",five );
+// printf("\nCompara %i",strcmp("Bobo","Bobl"));
+printf("\nthis is key value %s", (ptr2 + 9)->key );
+printf("\nthis is key value %s", (ptr2 + 10)->key );
 }

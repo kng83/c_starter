@@ -3,13 +3,15 @@
 #include <stdio.h>
 #include <string.h>
 
-void* findKeyInArr(ptr_Arr* arr_ptr, char* key); 
+void* findKeyInArr(key_val* arr_ptr, char* key); 
+int pushKeyPtrTooArr(key_val* arr_ptr, char* key, size_t value);
+int findFreeKeyPosition(key_val* arr_ptr, char* key);
 
 // first take the length of array which is hidden in -1 element of array
 // next check name of middle element of array
 // when middle element has name is alphabetic smaller take new new middle
 // element when programs find good key return value when key not found return
-void* findKeyInArr(ptr_Arr* arr_ptr, char* key) {
+void* findKeyInArr(key_val* arr_ptr, char* key) {
     int lim_up = adv_allocated_size(arr_ptr) / sizeof(*arr_ptr);
     int lim_down = 0;
     int middle_element;
@@ -52,6 +54,52 @@ void* findKeyInArr(ptr_Arr* arr_ptr, char* key) {
     return ret;
 }
 
-int pushKeyPtrTooArr(ptr_Arr* arr_ptr, char* key, size_t value){
+//**Find free key position if exists
+int findFreeKeyPosition(key_val* arr_ptr, char* key) {
+    int lim_up = adv_allocated_size(arr_ptr) / sizeof(*arr_ptr);
+    int lim_down = 0;
+    int middle_element;
+    int check = 1;
+    while (check) {
+        middle_element = (lim_up + lim_down) / 2;
+        check = strcmp(key, (arr_ptr + middle_element)->key);
+      
+        //key found
+        if (!check)  return -1;
 
+        //key is on the left
+        else if (check < 0) {
+            if(middle_element == lim_down) return middle_element;
+
+            lim_up = middle_element; 
+            continue;
+        }
+        // key is on the right
+        else if (check > 0) {
+             middle_element ++;
+             if(middle_element == lim_up) return middle_element;
+
+             lim_down = middle_element;
+            continue;
+        }
+    }
+    return -1;
+}
+//function checks if key exist if not create new record
+//if key exist NULL is returned
+int pushKeyPtrTooArr(key_val* arr_ptr, char* key, size_t value){
+  int lim_up = adv_allocated_size(arr_ptr) / sizeof(*arr_ptr);
+  int key_position = findFreeKeyPosition(arr_ptr,key);
+  int allocatedSize = adv_allocated_size(arr_ptr);
+  if(key_position>=0){
+    //reallocate memory by one place up
+    adv_realloc(arr_ptr, allocatedSize + sizeof(key_val));
+    lim_up +=1;
+    //move memory one place up
+    memmove(arr_ptr + key_position +1,arr_ptr + key_position,(lim_up - key_position)*sizeof(key_val));
+    //push new key value
+    strcpy((arr_ptr + key_position)->key,key);
+    (arr_ptr + key_position)->value_ptr = (size_t*)value;
+  }
+  return 0;
 }
