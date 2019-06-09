@@ -55,14 +55,21 @@ int main() {
     printf("\nelements is -------- %i",v_elementSize(ptr2));
     printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
     
-    key_val el;
+    key_val el,el2;
     strcpy(el.key,"Bilo");
+    strcpy(el2.key,"Momo");
+    el.value_ptr = (size_t*)&one;
+    el2.value_ptr = (size_t*)&two;
     printf("\nthis is %s",el.key);
     v_pushElement(ptr2,&el,0);
+    v_pushElement(ptr2,&el2,1);
   //  v_pushElement(ptr2,&el,1);
 
     printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
     printf("\nelements is -------- %s",(ptr2)->key);
+    printf("\nelements is -------- %i",*(ptr2)->value_ptr);
+    printf("\nelements is -------- %s",(ptr2+1)->key);
+    printf("\nelements is -------- %i",*(ptr2+1)->value_ptr);
     // pointer assignment
      (ptr2 + 0)->value_ptr = ptr_one;
      (ptr2 + 1)->value_ptr = ptr_two;

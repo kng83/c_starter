@@ -77,15 +77,18 @@ int v_decElementNumber(void* ptr){
 //** Push new element to table
 void* v_pushElement(void* ptr, key_val* element, int position){
     int actualNrOfElement = v_actualNrOfElements(ptr);
+    key_val* payload = ptr;
     if(actualNrOfElement < v_maxNrOfElements(ptr)){
-    void* moved = memmove(
-            (key_val*)(ptr + position + 1),
-            (key_val*)(ptr + position),
-            (actualNrOfElement - position) * v_elementSize(ptr));
-            
-    strcpy(((key_val*)(ptr + position))->key,element->key);
-    ((key_val*)(ptr + position))->value_ptr = element->value_ptr;
     v_incElementNumber(ptr);
+    void* moved = memmove(
+            (payload + position + 1),
+            (payload + position),
+            (size_t)((actualNrOfElement - position) * v_elementSize(ptr))
+            );
+            
+    strcpy((payload + position)->key,element->key);
+    (payload + position)->value_ptr = element->value_ptr;
+    
     return moved;
     }
     return NULL;
