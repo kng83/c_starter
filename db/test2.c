@@ -11,10 +11,13 @@ extern int pushKeyPtrTooArr(key_val* arr_ptr, char* key, size_t value);
 
 
 int main() {
-    key_val mArr[CELLS];
     size_t* ptr;
     key_val* ptr2;
-    ptr2 = adv_malloc(sizeof mArr);
+    header hObj;
+    ptr2 = v_malloc(hObj,2000000,sizeof(header));
+
+    char kot[10];
+gets(kot);
 
     // Fake pointer area
     int one = 1;
@@ -38,7 +41,6 @@ int main() {
                             "Nat",   "Netia", "Olcha", "Ospa", "Pack", "Piesek",
                             "Pwc",   "Zam",   "Zka"};
 
-    printf("\nsize is %i", adv_allocated_size(ptr2));
     strcpy((ptr2 + 0)->key, "Bobo");
     strcpy((ptr2 + 1)->key, "Com");
     strcpy((ptr2 + 2)->key, "Czas");
@@ -63,14 +65,14 @@ int main() {
     printf("\n----------------begin good------------------\n");
     for (int i = 0; i < 10; i++) {
         printf("\nfinding key %s", keyTrueArr[i]);
-        ret_ptr = findKeyInArr(ptr2, keyTrueArr[i]);
+   //     ret_ptr = findKeyInArr(ptr2, keyTrueArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
     printf("\n----------------begin fake------------------\n");
     for (int i = 0; i < 21; i++) {
         printf("\nfinding key %s", keyFakeArr[i]);
-        ret_ptr = findKeyInArr(ptr2, keyFakeArr[i]);
+      //  ret_ptr = findKeyInArr(ptr2, keyFakeArr[i]);
         printf("\nPointer %p", ret_ptr);
         printf("\n---------------------\n");
     }
@@ -97,4 +99,6 @@ pushKeyPtrTooArr(ptr2, "Zka",five );
 // printf("\nCompara %i",strcmp("Bobo","Bobl"));
 printf("\nthis is key value %s", (ptr2 + 9)->key );
 printf("\nthis is key value %s", (ptr2 + 10)->key );
+
+
 }
