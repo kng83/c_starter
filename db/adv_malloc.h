@@ -21,7 +21,7 @@ size_t adv_allocated_size(void* ptr);
  * type_size is single element size in Bytes
  * function returns pointer to first table element
  */
-void *v_malloc(header hObj,size_t nr_of_reserved_Bytes, int type_size);
+void *v_malloc(size_t nr_of_reserved_Bytes, int type_size);
 
 //**free memory
 void v_free(void* ptr);

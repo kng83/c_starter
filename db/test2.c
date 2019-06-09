@@ -14,10 +14,7 @@ int main() {
     size_t* ptr;
     key_val* ptr2;
     header hObj;
-    ptr2 = v_malloc(hObj,2000000,sizeof(header));
-
-    char kot[10];
-gets(kot);
+    ptr2 = v_malloc(2000000,sizeof(key_val));
 
     // Fake pointer area
     int one = 1;
@@ -41,23 +38,38 @@ gets(kot);
                             "Nat",   "Netia", "Olcha", "Ospa", "Pack", "Piesek",
                             "Pwc",   "Zam",   "Zka"};
 
-    strcpy((ptr2 + 0)->key, "Bobo");
-    strcpy((ptr2 + 1)->key, "Com");
-    strcpy((ptr2 + 2)->key, "Czas");
-    strcpy((ptr2 + 3)->key, "Dom");
-    strcpy((ptr2 + 4)->key, "Gom");
-    strcpy((ptr2 + 5)->key, "Kret");
-    strcpy((ptr2 + 6)->key, "Net");
-    strcpy((ptr2 + 7)->key, "Orka");
-    strcpy((ptr2 + 8)->key, "Pies");
-    strcpy((ptr2 + 9)->key, "Ziom");
+    // strcpy((ptr2 + 0)->key, "Bobo");
+    // strcpy((ptr2 + 1)->key, "Com");
+    // strcpy((ptr2 + 2)->key, "Czas");
+    // strcpy((ptr2 + 3)->key, "Dom");
+    // strcpy((ptr2 + 4)->key, "Gom");
+    // strcpy((ptr2 + 5)->key, "Kret");
+    // strcpy((ptr2 + 6)->key, "Net");
+    // strcpy((ptr2 + 7)->key, "Orka");
+    // strcpy((ptr2 + 8)->key, "Pies");
+    // strcpy((ptr2 + 9)->key, "Ziom");
 
+    
 
+    printf("\nelements is -------- %i",v_maxNrOfElements(ptr2));
+    printf("\nelements is -------- %i",v_elementSize(ptr2));
+    printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
+    
+    key_val el;
+    strcpy(el.key,"Bilo");
+    printf("\nthis is %s",el.key);
+    v_pushElement(ptr2,&el,0);
+  //  v_pushElement(ptr2,&el,1);
+
+    printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
+    printf("\nelements is -------- %s",(ptr2)->key);
     // pointer assignment
      (ptr2 + 0)->value_ptr = ptr_one;
      (ptr2 + 1)->value_ptr = ptr_two;
      (ptr2 + 2)->value_ptr = ptr_three;
      (ptr2 + 3)->value_ptr = ptr_four;
+
+    goto omit;
 
     // test true array
     size_t* ret_ptr = NULL;
@@ -92,13 +104,14 @@ gets(kot);
     printf("\nKey_2 address %p", &(ptr2 + 2)->key);
      printf("\nKey_9 %s",(ptr2 + 9)->key);
 
-pushKeyPtrTooArr(ptr2, "Zka",five );
+omit:;
+//pushKeyPtrTooArr(ptr2, "Zka",five );
 
 // pushKeyPtrTooArr(ptr2, "Piko",five );
 // pushKeyPtrTooArr(ptr2, "Bobos",five );
 // printf("\nCompara %i",strcmp("Bobo","Bobl"));
-printf("\nthis is key value %s", (ptr2 + 9)->key );
-printf("\nthis is key value %s", (ptr2 + 10)->key );
+//printf("\nthis is key value %s", (ptr2 + 9)->key );
+//printf("\nthis is key value %s", (ptr2 + 10)->key );
 
-
+printf("\ndoszlo");
 }

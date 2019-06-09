@@ -30,13 +30,12 @@ size_t adv_allocated_size(void* ptr) {
   
 }
 
-void *v_malloc(header hObj,size_t nr_of_reserved_Bytes, int type_size){
-    hObj.element_size = type_size;
-    hObj.max_key_allocation = (nr_of_reserved_Bytes - sizeof(header))/type_size;
-    hObj.nr_of_bytes = nr_of_reserved_Bytes; //increment if new value is added
-
+void *v_malloc(size_t nr_of_reserved_Bytes, int type_size){
     //allocate memory
     header* ret = malloc(nr_of_reserved_Bytes);
+    ret->element_size = type_size;
+    ret->max_key_allocation = (nr_of_reserved_Bytes - sizeof(header))/type_size;
+    ret->nr_of_bytes = nr_of_reserved_Bytes; //increment if new value is added
     return ret + 1 ;
 }
 
@@ -83,6 +82,9 @@ void* v_pushElement(void* ptr, key_val* element, int position){
             (key_val*)(ptr + position + 1),
             (key_val*)(ptr + position),
             (actualNrOfElement - position) * v_elementSize(ptr));
+            
+    strcpy(((key_val*)(ptr + position))->key,element->key);
+    ((key_val*)(ptr + position))->value_ptr = element->value_ptr;
     v_incElementNumber(ptr);
     return moved;
     }
