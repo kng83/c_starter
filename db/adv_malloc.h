@@ -48,7 +48,7 @@ int v_decElementNumber(void* ptr);
 void* v_pushElement(void* ptr, key_val* element, int position);
 
 //** Remove element from table
-void* v_removeElement(void* ptr, key_val* element, int position);
+void* v_removeElement(void* ptr, int position);
 
 
 

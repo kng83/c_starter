@@ -8,6 +8,7 @@
 // declarations
 extern void* findKeyInArr(key_val* arr_ptr, char* key);
 extern int pushKeyPtrTooArr(key_val* arr_ptr, char* key, size_t value);
+extern void* v_removeElement(void* ptr, int position);
 
 
 int main() {
@@ -55,21 +56,31 @@ int main() {
     printf("\nelements is -------- %i",v_elementSize(ptr2));
     printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
     
-    key_val el,el2;
+    key_val el,el2,el3;
     strcpy(el.key,"Bilo");
     strcpy(el2.key,"Momo");
+    strcpy(el3.key,"three");
     el.value_ptr = (size_t*)&one;
     el2.value_ptr = (size_t*)&two;
     printf("\nthis is %s",el.key);
     v_pushElement(ptr2,&el,0);
     v_pushElement(ptr2,&el2,1);
+    v_pushElement(ptr2,&el3,2);
   //  v_pushElement(ptr2,&el,1);
 
     printf("\nelements is -------- %i",v_actualNrOfElements(ptr2));
     printf("\nelements is -------- %s",(ptr2)->key);
-    printf("\nelements is -------- %i",*(ptr2)->value_ptr);
     printf("\nelements is -------- %s",(ptr2+1)->key);
+    printf("\nelements is -------- %s",(ptr2+2)->key);
+    printf("\nelements is -------- %i",*(ptr2)->value_ptr);
     printf("\nelements is -------- %i",*(ptr2+1)->value_ptr);
+
+    //remove element 
+    v_removeElement(ptr2,0);
+    printf("\nremove elements is -------- %s",(ptr2)->key);
+    printf("\nremove elements is -------- %s",(ptr2+1)->key);
+    printf("\nremove elements is -------- %s",(ptr2+2)->key);
+
     // pointer assignment
      (ptr2 + 0)->value_ptr = ptr_one;
      (ptr2 + 1)->value_ptr = ptr_two;
